@@ -1,0 +1,34 @@
+@layer base {
+  html {
+    font-family: "Be Vietnam Pro", sans-serif;
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #fafafa; /* Very Light Gray */
+    color: #1d1e25; /* Very Dark Blue */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 700;
+    color: #242d52; /* Dark Blue */
+  }
+
+  a {
+    color: #f25f3a; /* Bright Red */
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  p {
+    line-height: 1.625; /* leading-relaxed */
+    color: #9095a7; /* Dark Grayish Blue */
+  }
+}

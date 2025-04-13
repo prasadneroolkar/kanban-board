@@ -1,0 +1,13 @@
+@layer components {
+  .btn-primary {
+    @apply bg-brightRed text-white py-2 px-4 rounded-2xl hover:bg-red-500 transition;
+  }
+
+  .card {
+    @apply p-4 bg-white rounded-2xl shadow-md;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-4;
+  }
+}
