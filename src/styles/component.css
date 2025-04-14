@@ -1,3 +1,4 @@
+@reference "/style.css";
 @layer components {
   .btn-primary {
     @apply bg-brightRed text-white py-2 px-4 rounded-2xl hover:bg-red-500 transition;

@@ -31,4 +31,8 @@
     line-height: 1.625; /* leading-relaxed */
     color: #9095a7; /* Dark Grayish Blue */
   }
+
+  .custom-h2 {
+    font-size: 50px;
+  }
 }
