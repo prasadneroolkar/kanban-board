@@ -1,7 +1,47 @@
 @import "tailwindcss";
 
-@import "./base.css";
+@theme {
+  --font-display: "Fira Sans", "sans-serif";
+  --bg-opacity: 1;
+  --color-primary: rgb(255 255 255/1);
+  --color-secondary: rgb(44 247 253/1);
+  --color-theme: rgb(99 95 199/1);
+  --text-base: #000000;
+}
 
-/* @import "./components.css";
+@layer base {
+  :root {
+    font-family: var(--font-display);
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background-color: var(--color-primary);
+    color: #1d1e25;
+  }
 
-@import "./utilities.css"; */
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: ;
+    font-weight: 700;
+    color: #242d52; /* Dark Blue */
+  }
+
+  a {
+    color: #f25f3a; /* Bright Red */
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  p {
+    line-height: 1.625; /* leading-relaxed */
+    color: #9095a7; /* Dark Grayish Blue */
+  }
+
+  .custom-h2 {
+    font-size: 50px;
+  }
+}

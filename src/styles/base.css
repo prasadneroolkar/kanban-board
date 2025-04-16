@@ -1,13 +1,16 @@
 @layer base {
+  :root {
+    --font-display: "Fira Sans", sans-serif;
+  }
   html {
-    font-family: "Be Vietnam Pro", sans-serif;
+    font-family: var(--font-display);
     font-size: 16px;
     scroll-behavior: smooth;
   }
 
   body {
-    background-color: #fafafa; /* Very Light Gray */
-    color: #1d1e25; /* Very Dark Blue */
+    background-color: rgb(var(--primary-bg-color) var(--bg-opacity));
+    color: #1d1e25;
   }
 
   h1,
