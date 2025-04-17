@@ -6,7 +6,8 @@
   --color-primary: rgb(255 255 255/1);
   --color-secondary: rgb(44 247 253/1);
   --color-theme: rgb(99 95 199/1);
-  --text-base: #000000;
+  --color-base: #000000;
+  --ease-in-expo: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 @layer base {
