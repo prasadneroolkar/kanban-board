@@ -7,13 +7,25 @@ const Signup = () => {
   const [signupChecked, setsignupChecked] = useState(false);
 
   useEffect(() => {
-    console.log(loginChecked);
-    console.log(signupChecked);
+    console.log("Login checked", loginChecked);
+    console.log("Signup checked", signupChecked);
   }, [loginChecked, signupChecked]);
+
+  useEffect(() => {}, [loginChecked]);
 
   const handleLogin = (event) => {
     event.preventDefault();
     console.log("Login");
+  };
+
+  const handleLoginToggle = () => {
+    setloginChecked(true);
+    setsignupChecked(false);
+  };
+
+  const handleSignupToggle = () => {
+    setsignupChecked(true);
+    setloginChecked(false);
   };
 
   return (
@@ -26,24 +38,26 @@ const Signup = () => {
             defaultChecked
             id="login"
             className="hidden peer/login"
-            onChange={() => setloginChecked(!loginChecked)}
+            onChange={handleLoginToggle}
           />
           <input
             type="radio"
             name="toggle"
             id="signup"
             className=" hidden peer/signup"
-            onChange={() => setsignupChecked(!signupChecked)}
+            // onChange={() => setsignupChecked(true)}
           />
           <label
             htmlFor="login"
             className="size-full capitalize text-base text-lg font-medium z-1 text-center leading-[48px] peer-checked/login:text-white duration-[0.6s] ease-initial"
+            onClick={handleLoginToggle}
           >
             login
           </label>
           <label
             htmlFor="signup"
             className="size-full capitalize text-base text-lg font-medium z-1 text-center leading-[48px] peer-checked/signup:text-white duration-[0.6s] ease-initial"
+            onClick={handleSignupToggle}
           >
             Signup
           </label>
@@ -51,42 +65,42 @@ const Signup = () => {
         </div>
         <div className="flex w-[200%] overflow-hidden">
           {/* Login form */}
-          <form onSubmit={handleLogin} className="grid size-full">
+          <form
+            onSubmit={handleLogin}
+            className={`grid size-full duration-[0.6s] ease-in-expo  ${
+              loginChecked !== true ? "ml-[-50%]" : "ml-0"
+            }`}
+          >
             <div>
-              <label className="bg-mint-500"> Names </label>
               <input type="text" placeholder="Name" />
             </div>
             <div>
-              <label> Email Id</label>
               <input type="email" placeholder="Email" />
             </div>
             <div>
-              <label> Password</label>
               <input type="password" placeholder="Password" />
             </div>
             <div>
-              <label> Confirm password</label>
               <input type="password" placeholder="Confirm Password" />
             </div>
             <button type="Submit">create an account</button>
           </form>
 
           {/* Signup form */}
-          <form onSubmit={handleLogin} className="grid size-full">
+          <form
+            onSubmit={handleLogin}
+            className={`grid size-full duration-[0.6s] ease-in-expo`}
+          >
             <div>
-              <label className="bg-mint-500"> Names </label>
               <input type="text" placeholder="Name" />
             </div>
             <div>
-              <label> Email Id</label>
               <input type="email" placeholder="Email" />
             </div>
             <div>
-              <label> Password</label>
               <input type="password" placeholder="Password" />
             </div>
             <div>
-              <label> Confirm password</label>
               <input type="password" placeholder="Confirm Password" />
             </div>
             <button type="Submit">create an account</button>
