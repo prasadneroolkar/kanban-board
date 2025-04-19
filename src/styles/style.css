@@ -23,7 +23,6 @@
   h2,
   h3,
   h4 {
-    letter-spacing: ;
     font-weight: 700;
     color: #242d52; /* Dark Blue */
   }
@@ -44,5 +43,18 @@
 
   .custom-h2 {
     font-size: 50px;
+  }
+}
+
+@layer utilities {
+  .before-image::before {
+    content: "";
+    background-image: url("../assets/images/userIcon.svg");
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+    margin-top: -30px;
   }
 }

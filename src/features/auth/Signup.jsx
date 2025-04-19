@@ -3,6 +3,9 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../services/firebase.js";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import PersonIcon from "@mui/icons-material/Person";
+import MailIcon from "@mui/icons-material/Mail";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 
 const Signup = () => {
   const [loginChecked, setloginChecked] = useState(true);
@@ -40,9 +43,9 @@ const Signup = () => {
   };
 
   return (
-    <div className="bg-[linear-gradient(90deg,_#5D54A4,_#7C78B8)] h-screen">
-      <div className="mx-auto grid  lg:w-1/2 py-8 bg-primary max-w-[400px] p-[30px] overflow-hidden">
-        <div className="relative flex h-[50px] w-full my-[30px] justify-between border-1 border-gray-400 rounded-[50px] overflow-hidden">
+    <div className="bg-[linear-gradient(90deg,_#C7C5F4,_#776BCC)] h-screen grid items-center">
+      <div className="mx-auto grid  lg:w-1/2 py-8 bg-primary max-w-[400px] p-[30px] overflow-hidden shadow-[0px_0px_24px_#5C5696] rounded-[5px]">
+        <div className="relative flex h-[50px] w-full my-[30px] justify-between border-1 border-gray-400 rounded-[50px] overflow-hidden bg-[url(/img/mountains.jpg)]">
           <input
             type="radio"
             name="toggle"
@@ -82,8 +85,11 @@ const Signup = () => {
               loginChecked !== true ? "ml-[-50%]" : "ml-0"
             }`}
           >
-            <div>
+            <div className={` grid items-center my-2.5`}>
+              {/* <div> */}
+              <PersonIcon className=" mb-[-25px] text-theme" />
               <input
+                className=" border-b-2 border-gray-300 pl-[30px] w-[75%] placeholder:text-gray-500 z-[1] focus-visible:outline-0 hover:border-b-theme duration-[0.1s] ease-in"
                 {...register("name", {
                   required: "Name is required",
                   pattern: {
@@ -91,54 +97,89 @@ const Signup = () => {
                     message: "Alphabets only.",
                   },
                   minLength: {
-                    value: 11,
+                    value: 3,
                     message: " Name must min 3 characters",
                   },
                 })}
                 aria-invalid={errors.Name ? "true" : "false"}
                 placeholder="Name"
               />
+              {/* </div> */}
               <ErrorMessage
                 errors={errors}
                 name="name"
                 render={({ messages }) => {
+                  console.log(Object.entries(messages).length);
                   return messages
                     ? Object.entries(messages).map(([type, message]) => (
-                        <p key={type}>{message}</p>
+                        <p
+                          className="text-xs text-red-600  leading-[12px] mb-0.5"
+                          key={type}
+                        >
+                          {message}
+                        </p>
                       ))
                     : null;
                 }}
               />
             </div>
-            <div>
+            <div className="grid items-center my-2.5">
+              <MailIcon className=" mb-[-25px] text-theme" />
               <input
+                className=" border-b-2 border-gray-300 pl-[30px] w-[75%] placeholder:text-gray-500 z-[1] focus-visible:outline-0 hover:border-b-theme duration-[0.1s] ease-in"
                 {...register("email", {
                   required: "Email is required",
                 })}
                 aria-invalid={errors.email ? "true" : "false"}
                 placeholder="Email Address"
               />
-              {errors.email && <p role="alert">{errors.email.message}</p>}
+              {errors.email && (
+                <p
+                  className="text-xs text-red-600  leading-[12px] mb-0.5"
+                  role="alert"
+                >
+                  {errors.email.message}
+                </p>
+              )}
             </div>
-            <div>
+            <div className="grid items-center my-2.5">
+              <LockOpenIcon className=" mb-[-25px] text-theme" />
               <input
+                className=" border-b-2 border-gray-300 pl-[30px] w-[75%] placeholder:text-gray-500 z-[1] focus-visible:outline-0 hover:border-b-theme duration-[0.1s] ease-in"
                 {...register("password", {
                   required: "Password is required",
                 })}
                 aria-invalid={errors.password ? "true" : "false"}
                 placeholder="Password"
               />
-              {errors.password && <p role="alert">{errors.password.message}</p>}
+              {errors.password && (
+                <p
+                  className="text-xs text-red-600  leading-[12px] mb-0.5"
+                  role="alert"
+                >
+                  {errors.password.message}
+                </p>
+              )}
             </div>
-            <div>
+            <div className="grid items-center my-2.5">
+              <LockOpenIcon className=" mb-[-25px] text-theme" />
+
               <input
+                className=" border-b-2 border-gray-300 pl-[30px] w-[75%] placeholder:text-gray-500 z-[1] focus-visible:outline-0 hover:border-b-theme duration-[0.1s] ease-in"
                 {...register("confpass", {
                   required: "Re-enter password",
                 })}
                 aria-invalid={errors.confpass ? "true" : "false"}
                 placeholder="Confirm Password"
               />
-              {errors.confpass && <p role="alert">{errors.confpass.message}</p>}
+              {errors.confpass && (
+                <p
+                  className="text-xs text-red-600  leading-[12px] mb-0.5"
+                  role="alert"
+                >
+                  {errors.confpass.message}
+                </p>
+              )}
             </div>
             <button type="Submit">create an account</button>
           </form>
