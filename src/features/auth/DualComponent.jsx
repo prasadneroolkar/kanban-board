@@ -2,7 +2,10 @@ import { React, useState, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { db } from "../../services/firebase.js";
+import { doc, setDoc } from "firebase/firestore";
 import { auth } from "../../services/firebase.js";
 import { useForm } from "react-hook-form";
 import PersonIcon from "@mui/icons-material/Person";
@@ -12,7 +15,7 @@ import Form from "../../components/form-components/Form";
 import Input from "../../components/form-components/Input";
 import FormButton from "../../components/form-components/FormButton";
 
-const Signup = () => {
+const DualComponent = () => {
   const [loginChecked, setloginChecked] = useState(true);
   const [signupChecked, setsignupChecked] = useState(false);
 
@@ -46,7 +49,34 @@ const Signup = () => {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      const user = userCredential.user;
+      await updateProfile(user, {
+        displayName: data.name,
+      });
+      console.log("data.name:", data.name);
+      console.log("user.uid:", user.uid);
+      console.log("db instance:", db);
+
+      console.log("Firestore doc path:", `users/${user.uid}`);
+      try {
+        const docRef = doc(db, "users", user.uid);
+        await setDoc(docRef, {
+          uid: user.uid,
+          name: data.name,
+          email: data.email,
+          createdAt: new Date(),
+        });
+        console.log("User document successfully written!");
+      } catch (error) {
+        console.error("Error writing document:", error.code, error.message);
+      }
+
       console.log("Signup   successfully");
     } catch (err) {
       console.log(err.message);
@@ -217,4 +247,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default DualComponent;

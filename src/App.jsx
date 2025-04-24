@@ -1,13 +1,11 @@
-import Login from "./features/auth/Login";
-import Signup from "./features/auth/Signup";
+import DualComponent from "./features/auth/DualComponent";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
       <Routes>
-        <Route index element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route index element={<DualComponent />} />
       </Routes>
     </>
   );
