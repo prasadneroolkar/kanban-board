@@ -1,5 +1,8 @@
 import { React, useState, useEffect } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { auth } from "../../services/firebase.js";
 import { useForm } from "react-hook-form";
 import PersonIcon from "@mui/icons-material/Person";
@@ -25,12 +28,29 @@ const Signup = () => {
     formState: { errors: signupErrors },
   } = useForm({ criteriaMode: "all" });
 
-  const onLoginSubmit = (data) => {
+  const onLoginSubmit = async (data) => {
     console.log("Login Form Data:", data);
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      // navigate("/board"); // redirect to board after login
+      console.log("logged in successfully");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
-  const onSignupSubmit = (data) => {
-    console.log("Signup Form Data:", data);
+  const onSignupSubmit = async (data) => {
+    console.log("Signup Form Data:", JSON.stringify(data));
+    if (data.password !== data.confpass) {
+      console.log("Passwords do not match.");
+      return;
+    }
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+      console.log("Signup   successfully");
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   useEffect(() => {
@@ -164,6 +184,12 @@ const Signup = () => {
                 Inputname="password"
                 errorMsg="Password is required"
                 errors={signupErrors}
+                rules={{
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                }}
               />
 
               <Input
@@ -180,7 +206,7 @@ const Signup = () => {
           </div>
         </div>
 
-        <div class="absolute top-0 left-0 right-0 bottom-0 z-0 clip">
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-0 clip">
           <span className="absolute rotate-45 h-[400px] w-[200px] bg-[#7E7BB9] top-[220px] right-[-250px] rounded-[60px]"></span>
           <span className="absolute rotate-45 h-[540px] w-[190px] bg-lilac-gradient top-[-24px] right-[0px] rounded-[32px]"></span>
           <span className="absolute rotate-45 h-[220px] w-[220px] bg-[#6C63AC] top-[-172px] right-[0px] rounded-[32px]"></span>

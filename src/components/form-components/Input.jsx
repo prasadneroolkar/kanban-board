@@ -12,7 +12,7 @@ const Input = ({
 }) => {
   return (
     <div className=" my-2.5 h-auto w-full">
-      <div className="flex border-b-2 border-gray-300 hover:border-b-theme duration-[0.1s] ease-in">
+      <div className="flex border-b-2 border-gray-300 hover:border-b-theme duration-[0.1s] ease-in max-w-[90%]">
         {InputIcon && <InputIcon className="  text-theme" />}
         <input
           className="pl-[5px] placeholder:text-gray-500 z-[1] focus-visible:outline-0 "
