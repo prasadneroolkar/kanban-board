@@ -68,4 +68,25 @@
   .bg-lilac-gradient {
     background: linear-gradient(270deg, #5d54a4, #6a679e);
   }
+
+  .before-border::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    min-width: 500px;
+    height: 2px;
+    top: 50%;
+    left: 25px;
+    background-color: #d4d3e833;
+  }
+  .after-border::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    min-width: 400px;
+    height: 2px;
+    top: 50%;
+    right: 25px;
+    background-color: #d4d3e8;
+  }
 }

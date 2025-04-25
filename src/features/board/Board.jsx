@@ -1,12 +1,20 @@
 import React from "react";
-import useAuth from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Board = () => {
   const { user } = useAuth();
   return (
-    <div>
-      <p>user details</p>
-      <p>{user.uid}</p>
+    <div className="size-full bg-amber-800">
+      <p>User details:</p>
+      {user ? (
+        <>
+          <p>{user.uid}</p>
+          <p>{user.email}</p>
+          <p>{user.name || "No name available"}</p>{" "}
+        </>
+      ) : (
+        <p>Loading...</p> // Show loading state if user is null
+      )}
     </div>
   );
 };

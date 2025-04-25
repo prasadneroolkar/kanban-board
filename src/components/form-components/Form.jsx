@@ -8,4 +8,4 @@ const Form = ({ children, onSubmit, className }) => {
   );
 };
 
-export default Form;
+export default React.memo(Form);

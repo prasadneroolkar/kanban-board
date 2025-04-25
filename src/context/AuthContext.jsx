@@ -10,6 +10,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // console.log(user.name);
   const [loading, setLoading] = useState(true); // optional for loading state
 
   useEffect(() => {
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }) => {
         console.log("current user", currentUser);
         const userRef = doc(db, "users", currentUser.uid);
         const userSnap = await getDoc(userRef);
+        console.log("usersnap", userSnap.data().name);
 
         if (userSnap.exists()) {
           setUser({
