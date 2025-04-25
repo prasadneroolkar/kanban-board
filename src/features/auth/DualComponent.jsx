@@ -4,9 +4,8 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { db } from "../../services/firebase.js";
-import { doc, setDoc } from "firebase/firestore";
-import { auth } from "../../services/firebase.js";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../services/firebase.js";
 import { useForm } from "react-hook-form";
 import PersonIcon from "@mui/icons-material/Person";
 import MailIcon from "@mui/icons-material/Mail";
@@ -14,29 +13,54 @@ import LockOpenIcon from "@mui/icons-material/LockOpen";
 import Form from "../../components/form-components/Form";
 import Input from "../../components/form-components/Input";
 import FormButton from "../../components/form-components/FormButton";
+import { useNavigate } from "react-router-dom";
 
 const DualComponent = () => {
   const [loginChecked, setloginChecked] = useState(true);
   const [signupChecked, setsignupChecked] = useState(false);
 
+  const navigate = useNavigate();
+
   const {
     register: registerLogin,
     handleSubmit: handleSubmitLogin,
+    reset: loginReset,
     formState: { errors: loginErrors },
   } = useForm({ criteriaMode: "all" });
 
   const {
     register: registerSignup,
     handleSubmit: handleSubmitSignup,
+    reset: signupReset,
     formState: { errors: signupErrors },
   } = useForm({ criteriaMode: "all" });
 
   const onLoginSubmit = async (data) => {
     console.log("Login Form Data:", data);
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      // navigate("/board"); // redirect to board after login
-      console.log("logged in successfully");
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      const user = userCredential.user;
+      console.log("user", user);
+
+      // Fetch user data from Firestore
+      const userRef = doc(db, "Users", user.uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        console.log("User data from Firestore:", userData);
+        // You can now store this in context, state, or navigate
+      } else {
+        console.log("No user data found in Firestore");
+      }
+
+      navigate("/board"); // redirect to board after login
+      // alert("logged in successfully");
+      loginReset();
     } catch (err) {
       console.log(err.message);
     }
@@ -56,37 +80,32 @@ const DualComponent = () => {
       );
 
       const user = userCredential.user;
-      await updateProfile(user, {
-        displayName: data.name,
-      });
+      // await updateProfile(user, {
+      //   displayName: data.name,
+      // });
       console.log("data.name:", data.name);
       console.log("user.uid:", user.uid);
       console.log("db instance:", db);
 
       console.log("Firestore doc path:", `users/${user.uid}`);
       try {
-        const docRef = doc(db, "users", user.uid);
+        const docRef = doc(db, "Users", user.uid);
         await setDoc(docRef, {
           uid: user.uid,
           name: data.name,
           email: data.email,
-          createdAt: new Date(),
         });
-        console.log("User document successfully written!");
+        // alert("User document successfully written!");
       } catch (error) {
         console.error("Error writing document:", error.code, error.message);
       }
 
-      console.log("Signup   successfully");
+      alert("Signup   successfully");
+      signupReset();
     } catch (err) {
       console.log(err.message);
     }
   };
-
-  useEffect(() => {
-    console.log("Login checked", loginChecked);
-    console.log("Signup checked", signupChecked);
-  }, [loginChecked, signupChecked]);
 
   const handleLoginToggle = () => {
     setloginChecked(true);
