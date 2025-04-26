@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "../services/firebase.js";
+import { auth } from "../../services/firebase.js";
 import { signOut } from "firebase/auth";
 
 const LogoutButton = () => {

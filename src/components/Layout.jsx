@@ -2,16 +2,17 @@ import React from "react";
 import Board from "../components/board/Board";
 import Header from "../components/header/Header";
 import Sidebar from "../components/sidebar/Sidebar";
-import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <div>
-      <Board />
-      <Sidebar />
+    <>
       <Header />
-      <Outlet />
-    </div>
+
+      <div className="grid grid-cols-[minmax(261px,_auto)_1fr] *:h-dvh relative top-[82px]">
+        <Sidebar />
+        <Board />
+      </div>
+    </>
   );
 };
 
