@@ -17,9 +17,9 @@ export const AuthProvider = ({ children }) => {
     const unsub = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         console.log("current user", currentUser);
-        const userRef = doc(db, "users", currentUser.uid);
+        const userRef = doc(db, "Users", currentUser.uid);
         const userSnap = await getDoc(userRef);
-        console.log("usersnap", userSnap.data().name);
+        console.log("usersnap", userSnap.data());
 
         if (userSnap.exists()) {
           setUser({
@@ -28,7 +28,12 @@ export const AuthProvider = ({ children }) => {
             ...userSnap.data(),
           });
         } else {
-          setUser(currentUser); // fallback to just Firebase user
+          console.log("else part");
+          setUser({
+            uid: currentUser.uid,
+            email: currentUser.email,
+            name: currentUser.displayName,
+          });
         }
       } else {
         setUser(null);

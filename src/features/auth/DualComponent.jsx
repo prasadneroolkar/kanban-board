@@ -60,7 +60,7 @@ const DualComponent = () => {
         console.log("No user data found in Firestore");
       }
 
-      navigate("/board"); // redirect to board after login
+      navigate("/dashboard"); // redirect to board after login
       // alert("logged in successfully");
       loginReset();
     } catch (err) {
@@ -73,7 +73,7 @@ const DualComponent = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      navigate("/board");
+      navigate("/dashboard");
     } catch (error) {
       console.log("Google sign-in error:", error.message);
     }
@@ -114,6 +114,7 @@ const DualComponent = () => {
       }
 
       alert("Signup   successfully");
+      navigate("/dashboard");
       signupReset();
     } catch (err) {
       console.log(err.message);
