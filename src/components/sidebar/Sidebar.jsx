@@ -1,5 +1,6 @@
 import React from "react";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import ToggleTheme from "../sidebar/ToggleTheme";
 const Sidebar = () => {
   return (
     <aside className="h-full min-w-[261px] bg-white ">
@@ -21,7 +22,7 @@ const Sidebar = () => {
           </li>
         </ul>
         <div>
-          <button className="w-11 h-6 relative" type="button"></button>
+          <ToggleTheme />
         </div>
       </div>
     </aside>

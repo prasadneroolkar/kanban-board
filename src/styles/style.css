@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
   --font-display: "Fira Sans", "sans-serif";
   --bg-opacity: 1;
