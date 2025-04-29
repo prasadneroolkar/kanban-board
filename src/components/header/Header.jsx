@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../assets/images/logo.png";
 import Button from "../button/Button";
+import Dotmenu from "../header/Dotmenu";
 
 const Header = () => {
   return (
@@ -14,8 +15,9 @@ const Header = () => {
           platform launch
         </p>
       </div>
-      <div>
+      <div className="flex items-center justify-between">
         <Button buttonName="add New task" />
+        <Dotmenu />
       </div>
     </header>
   );
