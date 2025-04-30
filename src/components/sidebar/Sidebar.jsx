@@ -3,14 +3,17 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import ToggleTheme from "../sidebar/ToggleTheme";
 const Sidebar = () => {
   return (
-    <aside className="h-full min-w-[261px] bg-white ">
+    <aside className="h-full min-w-[261px] bg-white  dark:bg-[#2b2c37] ">
       <div>
-        <p>All Boards (3)</p>
+        <p className="dark:text-gray-300">All Boards (3)</p>
 
         <ul>
           <li>
-            <FormatListBulletedIcon sx={{ fontSize: 20 }} />
-            <span>Platform Launch</span>
+            <FormatListBulletedIcon
+              sx={{ fontSize: 20 }}
+              className="dark:text-[#828fa3]"
+            />
+            <span className="dark:text-white">Platform Launch</span>
           </li>
           <li>
             <FormatListBulletedIcon />
