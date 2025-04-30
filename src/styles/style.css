@@ -8,6 +8,10 @@
   --color-theme: rgb(99 95 199/1);
   --color-base: #000000;
   --ease-in-expo: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --color-darkbg: #2b2c37;
+  --color-shadow: #364e7e1a;
+  --color-dark-layout: #20212c;
+  --color-dark-text: #828fa3;
 }
 
 @layer base {

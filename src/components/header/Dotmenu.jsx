@@ -28,9 +28,8 @@ const Dotmenu = () => {
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <MoreVertIcon />
+        <MoreVertIcon className="dark:text-dark-text" />
       </IconButton>
-
       <Menu
         id="long-menu"
         MenuListProps={{
@@ -55,12 +54,18 @@ const Dotmenu = () => {
           vertical: "top",
           horizontal: "right",
         }}
+        MenuListProps={{
+          className:
+            "bg-white dark:text-gray-400 dark:bg-darkbg p-0 dark:text-sm",
+        }}
       >
-        {options.map((option) => (
-          <MenuItem key={option} onClick={handleClose}>
-            {option}
-          </MenuItem>
-        ))}
+        <div className="">
+          {options.map((option) => (
+            <MenuItem key={option} onClick={handleClose}>
+              {option}
+            </MenuItem>
+          ))}
+        </div>
       </Menu>
     </div>
   );
