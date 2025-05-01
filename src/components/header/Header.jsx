@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../assets/images/logo.png";
 import Button from "../button/Button";
 import Dotmenu from "../header/Dotmenu";
+import ModalComponent from "../common/ModalComponent";
 
 const Header = () => {
   return (
@@ -15,6 +16,7 @@ const Header = () => {
           platform launch
         </p>
       </div>
+      <ModalComponent />
       <div className="flex items-center justify-between">
         <Button buttonName="add New task" />
         <Dotmenu />

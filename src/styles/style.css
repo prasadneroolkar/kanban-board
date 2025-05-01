@@ -93,4 +93,8 @@
     right: 25px;
     background-color: #d4d3e8;
   }
+
+  .scrollbar-hide {
+    scrollbar-width: none;
+  }
 }

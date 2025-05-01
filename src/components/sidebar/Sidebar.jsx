@@ -3,7 +3,7 @@ import ToggleTheme from "../sidebar/ToggleTheme";
 import TaskList from "../sidebar/TaskList";
 const Sidebar = () => {
   return (
-    <aside className="h-svh min-w-[261px] bg-white  dark:bg-[#2b2c37] relative">
+    <aside className="h-svh min-w-[261px] bg-white  dark:bg-[#2b2c37] absolute">
       <div className="mr-8 py-6">
         <p className="dark:text-gray-300 text-gray-600 font-[500] uppercase tracking-[0.3px] mb-8 text-md ml-5">
           All Boards (3)

@@ -56,7 +56,7 @@ const Dotmenu = () => {
         }}
         MenuListProps={{
           className:
-            "bg-white dark:text-gray-400 dark:bg-darkbg p-0 dark:text-sm",
+            "text-sm font-medium bg-white dark:text-gray-400 dark:bg-darkbg p-0 dark:text-sm ",
         }}
       >
         <div className="">
