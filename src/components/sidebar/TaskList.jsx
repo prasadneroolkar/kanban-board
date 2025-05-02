@@ -1,5 +1,6 @@
 import React from "react";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import ModalComponent from "../common/ModalComponent";
 
 const TaskList = () => {
   return (
@@ -17,7 +18,8 @@ const TaskList = () => {
           sx={{ fontSize: 20 }}
           className="dark:text-[#828fa3]"
         />
-        <span>Create New Board</span>
+
+        <ModalComponent textContent="Create New Board" />
       </li>
     </ul>
   );

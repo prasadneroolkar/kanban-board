@@ -12,6 +12,7 @@
   --color-shadow: #364e7e1a;
   --color-dark-layout: #20212c;
   --color-dark-text: #828fa3;
+  --color-gray-600: oklch(0.82 0.15 72.09);
 }
 
 @layer base {
