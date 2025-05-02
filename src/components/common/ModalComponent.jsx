@@ -1,37 +1,41 @@
-import React from "react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/react";
+import * as React from "react";
+import Modal from "react-modal";
+Modal.setAppElement("#root"); // For accessibility
 
 const ModalComponent = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Lorem count={2} />
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
+      <button
+        onClick={openModal}
+        className="bg-blue-500 text-white p-2 rounded"
+      >
+        Open Modal
+      </button>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className="bg-white p-6 rounded-lg  max-w-md max-h-[95vh] z-20 absolute mx-auto top-0 left-0 right-0 bottom-0 "
+        overlayClassName="fixed bg-black opacity-50 inset-0"
+      >
+        <h2 className="text-xl font-semibold">Modal Title</h2>
+        <p className="mt-2">This is a simple modal styled with Tailwind CSS.</p>
+        <div className="mt-4 flex justify-end">
+          <button
+            onClick={closeModal}
+            className="bg-gray-500 text-white py-1 px-3 rounded"
+          >
+            Close
+          </button>
+        </div>
       </Modal>
     </>
   );
