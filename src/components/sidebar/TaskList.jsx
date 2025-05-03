@@ -1,6 +1,6 @@
 import React from "react";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import ModalComponent from "../common/ModalComponent";
+import CreateNewBoard from ".././modal/CreateNewBoard";
 
 const TaskList = () => {
   return (
@@ -19,7 +19,7 @@ const TaskList = () => {
           className="dark:text-[#828fa3]"
         />
 
-        <ModalComponent textContent="Create New Board" />
+        <CreateNewBoard />
       </li>
     </ul>
   );
