@@ -3,16 +3,12 @@ import TaskCard from "../board/TaskCard";
 import useColor from "../../hooks/useColor.js";
 
 const Columns = () => {
-  const { randomColor } = useColor();
-  // console.log("randomColor", randomColor());
-  const [first, setfirst] = useState();
+  const { value, randomColor } = useColor();
 
-  const changeColor = () => {
-    const colorvalue = randomColor();
-    setfirst(colorvalue);
-  };
-
-  // useEffect(() => {}, []);
+  const [first, setfirst] = useState(value);
+  useEffect(() => {
+    setfirst(randomColor());
+  }, []);
 
   return (
     <div className="min-w-[280px]">
@@ -24,10 +20,6 @@ const Columns = () => {
       </h3>
       <TaskCard />
       <TaskCard />
-
-      <button type="button" onClick={changeColor}>
-        chnage
-      </button>
     </div>
   );
 };
