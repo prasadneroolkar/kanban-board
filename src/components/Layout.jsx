@@ -10,7 +10,6 @@ const Layout = () => {
 
       <div className="grid grid-cols-[minmax(261px,_auto)_1fr] *:h-dvh relative top-[82px] overflow-hidden">
         <Board />
-        <Example />
       </div>
     </>
   );

@@ -8,19 +8,16 @@ import { useSelector } from "react-redux";
 
 const Board = () => {
   const { user } = useAuth();
-  const boards = useSelector((state) => state.board.boards);
+  // const boards = useSelector((state) => state.board.boards);
   return (
     <>
       <div className="size-full bg-[#f4f7fd] flex dark:bg-dark-layout">
         <Sidebar />
         <div className="flex gap-11 py-4 px-10 ml-[261px] overflow-x-scroll scrollbar-hide overflow-y-scroll">
-          {/* <Columns />
           <Columns />
           <Columns />
-          <NewColumn /> */}
-          {boards.map((board) => (
-            <div key={board.id}>{board.name}</div>
-          ))}
+          <Columns />
+          <NewColumn />
         </div>
       </div>
     </>
