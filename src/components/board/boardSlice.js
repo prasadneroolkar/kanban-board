@@ -10,7 +10,7 @@ const boardSlice = createSlice({
   initialState,
   reducers: {
     setBoards: (state, action) => {
-      state.boards = action.payload;
+      state.boards.push(action.payload);
     },
     setCurrentBoard: (state, action) => {
       state.currentBoardId = action.payload;
