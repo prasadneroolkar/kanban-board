@@ -60,9 +60,12 @@ const CreateNewBoard = () => {
       columns: columns, // The array of columns you've built
     };
 
-    // Dispatch the new board — add to the list of boards
-    dispatch(setBoards(newBoard));
-    dispatch(setCurrentBoard(newBoard.id));
+    try {
+      dispatch(setBoards(newBoard));
+      dispatch(setCurrentBoard(newBoard.id));
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <div>
