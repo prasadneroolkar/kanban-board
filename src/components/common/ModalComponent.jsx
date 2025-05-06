@@ -26,7 +26,7 @@ const ModalComponent = ({ textContent, children }) => {
         className="scrollbar-hide overflow-y-scroll bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold shadow-md shadow-[#364e7e1a] max-w-md mx-auto my-auto w-full px-8  py-8 rounded-xl"
         overlayClassName="fixed bg-black/50 inset-0 size-full flex items-center z-20"
       >
-        {children}
+        {typeof children === "function" ? children(closeModal) : children}
       </Modal>
     </>
   );

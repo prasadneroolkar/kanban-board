@@ -8,8 +8,11 @@ import ButtonWrapper from "../common/ButtonWrapper";
 import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
 import { setBoards, setCurrentBoard } from "../board/boardSlice.js";
+import useColor from "../../hooks/useColor.js";
 
 const CreateNewBoard = () => {
+  const { randomColor } = useColor();
+
   const [boardName, setBoardName] = useState("");
 
   const dispatch = useDispatch();
@@ -19,8 +22,14 @@ const CreateNewBoard = () => {
       id: nanoid(),
       name: "default1",
       value: "Todo",
+      color: randomColor(),
     },
-    { id: nanoid(), name: "default2", value: "Doing" },
+    {
+      id: nanoid(),
+      name: "default2",
+      value: "Doing",
+      color: randomColor(),
+    },
   ]);
 
   const handleMultiplecol = (id, newValue) => {
@@ -38,6 +47,7 @@ const CreateNewBoard = () => {
       id: nanoid(),
       name: "column" + (columns.length + 1),
       value: "",
+      color: randomColor(),
     };
 
     setColumns((prev) => [...prev, newColumn]);
@@ -53,7 +63,19 @@ const CreateNewBoard = () => {
     setColumns(deletedInput);
   };
 
-  const createNewBoard = () => {
+  const resetModal = () => {
+    setBoardName("");
+    setColumns([
+      {
+        id: nanoid(),
+        name: "default1",
+        value: "Todo",
+      },
+      { id: nanoid(), name: "default2", value: "Doing" },
+    ]);
+  };
+
+  const createNewBoard = (closeModal) => {
     const newBoard = {
       id: nanoid(), // Unique id for the board
       name: boardName, // The board name from your input
@@ -63,56 +85,61 @@ const CreateNewBoard = () => {
     try {
       dispatch(setBoards(newBoard));
       dispatch(setCurrentBoard(newBoard.id));
+      closeModal();
+      resetModal();
     } catch (error) {
       console.log(error.message);
     }
   };
+
   return (
-    <div>
-      <ModalComponent textContent="Create New Board">
-        <ModalHeading title="Add New Board" />
+    <ModalComponent textContent="Create New Board">
+      {(closeModal) => (
+        <>
+          <ModalHeading title="Add New Board" />
 
-        <Wrapper>
-          <ModalHeading subtitle="Board Name" />
-          <ModalInputs
-            value={boardName}
-            placeholder="e.g Web Design"
-            onChange={handleBoardName}
-          />
-        </Wrapper>
+          <Wrapper>
+            <ModalHeading subtitle="Board Name" />
+            <ModalInputs
+              value={boardName}
+              placeholder="e.g Web Design"
+              onChange={handleBoardName}
+            />
+          </Wrapper>
 
-        <Wrapper>
-          <ModalHeading subtitle=" Board Columns" />
+          <Wrapper>
+            <ModalHeading subtitle=" Board Columns" />
 
-          {columns.map((column) => (
-            <div
-              key={column.id}
-              className="flex items-center space-x-2 justify-center mt-[12px]"
-            >
-              <ModalInputs
-                name={column.name}
-                value={column.value}
-                onChange={(e) => handleMultiplecol(column.id, e.target.value)}
-              />
-              <CloseButton onClick={() => handleRemove(column.id)} />
-            </div>
-          ))}
-        </Wrapper>
-        <ButtonWrapper>
-          <Button
-            buttonName="Add New Column"
-            icon="+"
-            className="w-full justify-center"
-            onClick={addColumn}
-          />
-          <Button
-            buttonName="Create New Board"
-            className="w-full justify-center"
-            onClick={createNewBoard}
-          />
-        </ButtonWrapper>
-      </ModalComponent>
-    </div>
+            {columns.map((column) => (
+              <div
+                key={column.id}
+                className="flex items-center space-x-2 justify-center mt-[12px]"
+              >
+                <ModalInputs
+                  name={column.name}
+                  value={column.value}
+                  onChange={(e) => handleMultiplecol(column.id, e.target.value)}
+                />
+                <CloseButton onClick={() => handleRemove(column.id)} />
+              </div>
+            ))}
+          </Wrapper>
+          <ButtonWrapper>
+            <Button
+              buttonName="Add New Column"
+              icon="+"
+              className="w-full justify-center"
+              onClick={addColumn}
+            />
+            <Button
+              buttonName="Create New Board"
+              className="w-full justify-center"
+              onClick={() => createNewBoard(closeModal)}
+            />
+          </ButtonWrapper>
+        </>
+      )}
+    </ModalComponent>
   );
 };
 

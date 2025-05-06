@@ -17,11 +17,10 @@ const Board = () => {
 
   return (
     <>
-      <div className="size-full bg-[#f4f7fd] flex dark:bg-dark-layout">
+      <div className="w-dvw bg-[#f4f7fd] flex dark:bg-dark-layout">
         <Sidebar />
         <div className="flex gap-11 py-4 px-10 ml-[261px] overflow-x-scroll scrollbar-hide overflow-y-scroll">
           <Columns />
-
           <NewColumn />
         </div>
       </div>
