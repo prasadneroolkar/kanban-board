@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../../assets/images/logo.png";
 import Button from "../button/Button";
 import Dotmenu from "../header/Dotmenu";
+import AddNewTask from ".././modal/AddNewTask";
 
 const Header = () => {
   return (
@@ -17,7 +18,7 @@ const Header = () => {
       </div>
 
       <div className="flex items-center justify-between">
-        <Button buttonName="add New task" icon="+" />
+        <Button buttonName={<AddNewTask />} icon="+" />
         <Dotmenu />
       </div>
     </header>

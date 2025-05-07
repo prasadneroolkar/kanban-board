@@ -17,7 +17,7 @@ const CreateNewBoard = () => {
 
   const dispatch = useDispatch();
 
-  const [columns, setColumns] = useState([
+  const [columns, setColumns] = useState(() => [
     {
       id: nanoid(),
       name: "default1",
@@ -38,10 +38,6 @@ const CreateNewBoard = () => {
     );
   };
 
-  useEffect(() => {
-    console.log("columns", columns);
-  }, [columns]);
-
   const addColumn = () => {
     const newColumn = {
       id: nanoid(),
@@ -53,12 +49,10 @@ const CreateNewBoard = () => {
     setColumns((prev) => [...prev, newColumn]);
   };
   const handleBoardName = () => {
-    console.log("bordname", event.target.value);
     setBoardName(event.target.value);
   };
 
   const handleRemove = (id) => {
-    console.log(id);
     const deletedInput = columns.filter((val) => val.id !== id);
     setColumns(deletedInput);
   };
@@ -70,8 +64,9 @@ const CreateNewBoard = () => {
         id: nanoid(),
         name: "default1",
         value: "Todo",
+        color: randomColor(),
       },
-      { id: nanoid(), name: "default2", value: "Doing" },
+      { id: nanoid(), name: "default2", value: "Doing", color: randomColor() },
     ]);
   };
 

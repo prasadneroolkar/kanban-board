@@ -14,12 +14,14 @@ const Columns = () => {
 
   return (
     <>
-      {boardCol?.map((col, index) => (
-        <div className="min-w-[280px]" key={index}>
+      {boardCol?.map((col) => (
+        <div className="min-w-[280px]" key={col.id}>
           <h3 className="space-x-2 flex items-center">
-            <span className={`rounded-full  w-4 h-4 inline-block`}></span>
+            <span
+              className={`rounded-full w-4 h-4 inline-block ${col.color}`}
+            ></span>
             <span className="text-dark-text tracking-widest font-semibold">
-              {/* {col} */}
+              {col.value}
             </span>
           </h3>
           <TaskCard />
