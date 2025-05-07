@@ -51,6 +51,15 @@
   }
 }
 
+@layer components {
+  .select-status {
+    appearance: none;
+    background-image: url("/src/assets/images/chevron.svg");
+    background-repeat: no-repeat;
+    background-position: right 16px top 50%;
+  }
+}
+
 @layer utilities {
   .before-image::before {
     content: "";

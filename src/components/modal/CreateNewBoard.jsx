@@ -7,7 +7,7 @@ import CloseButton from ".././modal/CloseButton";
 import ButtonWrapper from "../common/ButtonWrapper";
 import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
-import { setBoards, setCurrentBoard } from "../board/boardSlice.js";
+import { addBoard, setCurrentBoard } from "../board/boardSlice.js";
 import useColor from "../../hooks/useColor.js";
 
 const CreateNewBoard = () => {
@@ -78,7 +78,7 @@ const CreateNewBoard = () => {
     };
 
     try {
-      dispatch(setBoards(newBoard));
+      dispatch(addBoard(newBoard));
       dispatch(setCurrentBoard(newBoard.id));
       closeModal();
       resetModal();
@@ -88,7 +88,7 @@ const CreateNewBoard = () => {
   };
 
   return (
-    <ModalComponent textContent="Create New Board">
+    <ModalComponent textContent="Create New Board" classname="text-theme">
       {(closeModal) => (
         <>
           <ModalHeading title="Add New Board" />

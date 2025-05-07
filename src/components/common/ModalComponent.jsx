@@ -5,7 +5,7 @@ import Button from "../button/Button";
 import Close from "../../assets/images/close.svg";
 import ModalHeading from ".././modal/ModalTitle";
 
-const ModalComponent = ({ textContent, children }) => {
+const ModalComponent = ({ textContent, children, classname }) => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   const openModal = () => {
@@ -17,9 +17,9 @@ const ModalComponent = ({ textContent, children }) => {
   };
   return (
     <>
-      <button onClick={openModal} className="cursor-pointer">
+      <p onClick={openModal} className={`cursor-pointer ${classname}`}>
         {textContent}
-      </button>
+      </p>
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}

@@ -1,7 +1,6 @@
 import React from "react";
 import Board from "../components/board/Board";
 import Header from "../components/header/Header";
-import { Example } from "../components/Example";
 
 const Layout = () => {
   return (
