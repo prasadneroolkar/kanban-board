@@ -25,12 +25,7 @@ const boardSlice = createSlice({
       const column = board.columns.find((cid) => cid.id === columnId);
       if (!column) return;
 
-      if (!column.tasks) {
-        column.tasks = [];
-      }
-
       column.tasks.push(task);
-      console.log("task", column.tasks.push(task));
     },
   },
 });

@@ -23,12 +23,14 @@ const CreateNewBoard = () => {
       name: "default1",
       value: "Todo",
       color: randomColor(),
+      tasks: [],
     },
     {
       id: nanoid(),
       name: "default2",
       value: "Doing",
       color: randomColor(),
+      tasks: [],
     },
   ]);
 
@@ -44,6 +46,7 @@ const CreateNewBoard = () => {
       name: "column" + (columns.length + 1),
       value: "",
       color: randomColor(),
+      tasks: [],
     };
 
     setColumns((prev) => [...prev, newColumn]);
@@ -65,15 +68,22 @@ const CreateNewBoard = () => {
         name: "default1",
         value: "Todo",
         color: randomColor(),
+        tasks: [],
       },
-      { id: nanoid(), name: "default2", value: "Doing", color: randomColor() },
+      {
+        id: nanoid(),
+        name: "default2",
+        value: "Doing",
+        color: randomColor(),
+        tasks: [],
+      },
     ]);
   };
 
   const createNewBoard = (closeModal) => {
     const newBoard = {
       id: nanoid(), // Unique id for the board
-      name: boardName, // The board name from your input
+      name: boardName.trim(), // The board name from your input
       columns: columns, // The array of columns you've built
     };
 
