@@ -22,7 +22,7 @@ const boardSlice = createSlice({
       const board = state.boards.find((bid) => bid.id === boardId);
       if (!board) return;
 
-      const column = board.columns.map((cid) => cid.id === columnId);
+      const column = board.columns.find((cid) => cid.id === columnId);
       if (!column) return;
 
       if (!column.tasks) {
@@ -30,6 +30,7 @@ const boardSlice = createSlice({
       }
 
       column.tasks.push(task);
+      console.log("task", column.tasks.push(task));
     },
   },
 });

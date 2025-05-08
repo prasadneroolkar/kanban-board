@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ModalComponent from ".././common/ModalComponent";
 import ModalHeading from ".././modal/ModalTitle";
 import ModalInputs, { Wrapper } from "../modal/ModalInputs";
@@ -12,11 +12,20 @@ const AddNewTask = () => {
   const currentId = useSelector((state) => state.board.currentBoardId);
   const boards = useSelector((state) => state.board.boards);
   const dispatch = useDispatch();
+  // console.log("boards", boards);
+  // console.log("boards name", boards?.columns?.[0]?.name);
 
   const currentBoard = boards?.find((board) => board.id === currentId);
-  console.log("currentBoard", currentBoard.id);
+  console.log("currentBoard", currentBoard);
 
   const [taskName, setTaskName] = useState("");
+  const [taskDesc, setTaskDesc] = useState("");
+
+  const selectRef = useRef();
+
+  // const [selectedValue, setselectedValue] = useState(
+  //   currentBoard?.columns?.[0].value
+  // );
 
   const [subTask, setsubTask] = useState([
     {
@@ -32,8 +41,9 @@ const AddNewTask = () => {
   ]);
 
   useEffect(() => {
-    console.log("subTask", subTask);
-  }, [subTask]);
+    // console.log("subTask", subTask);
+    // console.log("selectedValue", selectedValue);
+  }, []);
 
   const handleRemove = (id) => {
     const removeTask = subTask?.filter((task) => task.id !== id);
@@ -55,13 +65,26 @@ const AddNewTask = () => {
     );
   };
 
+  const resetModal = () => {};
   const createTask = () => {
+    const selectedOption =
+      selectRef.current.options[selectRef.current.selectedIndex];
+    const selectedId = selectedOption.id;
+
     try {
       dispatch(
         addTask({
-          boardId: {currentBoard.id},
+          boardId: currentBoard.id,
+          columnId: selectedId,
+          task: {
+            id: nanoid(),
+            name: taskName,
+            description: taskDesc,
+            subTask: subTask,
+          },
         })
       );
+      resetModal();
     } catch (error) {
       console.log(error.message);
     }
@@ -75,13 +98,15 @@ const AddNewTask = () => {
         <ModalInputs
           value={taskName}
           placeholder=" e.g Take coffee break"
-          onChange={() => setTaskName(event.target.value)}
+          onChange={(event) => setTaskName(event.target.value)}
         />
       </Wrapper>
       <Wrapper>
         <ModalHeading subtitle="Description" />
         <textarea
           name="description"
+          value={taskDesc}
+          onChange={(event) => setTaskDesc(event.target.value)}
           placeholder="e.g. It's always good to take a break. This  15 minute break will  recharge the batteries  a little."
           className="min-h-[100px] size-full rounded-md text-sm border-[0.5px] w-full border-gray-500 tracking-wide focus:outline-[#635fc7] focus:outline-1 bg-transparent px-4 py-2 ring-0"
         />
@@ -97,7 +122,7 @@ const AddNewTask = () => {
               name={subTask.name}
               value={subTask.value}
               placeholder=" e.g Take coffee break"
-              onChange={() => handleInput(event.target.value, task.id)}
+              onChange={(event) => handleInput(event.target.value, task.id)}
             />
             <CloseButton onClick={() => handleRemove(task.id)} />
           </div>
@@ -112,11 +137,12 @@ const AddNewTask = () => {
       <Wrapper>
         <ModalHeading subtitle="Current Status " />
         <select
+          ref={selectRef}
           name="columns"
           className="size-full rounded-md text-sm border-[0.5px] w-full border-gray-500 tracking-wide focus:outline-[#635fc7] focus:outline-1 bg-transparent px-4 py-2 ring-0 mt-3 mb-4 select-status cursor-pointer"
         >
           {currentBoard?.columns?.map((val) => (
-            <option value="todo" key={val.id}>
+            <option value={val.value} key={val.id} id={val.id}>
               {val.value}
             </option>
           ))}
