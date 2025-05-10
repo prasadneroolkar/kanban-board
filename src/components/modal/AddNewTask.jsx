@@ -20,7 +20,13 @@ const AddNewTask = () => {
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
 
+  const [selectedOp, setSelectop] = useState("");
+
+  useEffect(() => {}, []);
+
   const selectRef = useRef();
+
+  // useEffect(() => {}, []);
 
   // const [selectedValue, setselectedValue] = useState(
   //   currentBoard?.columns?.[0].value
@@ -163,9 +169,12 @@ const AddNewTask = () => {
               ref={selectRef}
               name="columns"
               className="size-full rounded-md text-sm border-[0.5px] w-full border-gray-500 tracking-wide focus:outline-[#635fc7] focus:outline-1 bg-transparent px-4 py-2 ring-0 mt-3 mb-4 select-status cursor-pointer"
+              onChange={(e) =>
+                console.log("Selected column id:", e.target.value)
+              }
             >
               {currentBoard?.columns?.map((val) => (
-                <option value={val.value} key={val.id} id={val.id}>
+                <option value={val.id} key={val.id} id={val.id}>
                   {val.value}
                 </option>
               ))}

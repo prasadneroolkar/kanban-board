@@ -10,7 +10,7 @@ const Columns = () => {
     ?.find((board) => board.id === currentBoardId)
     ?.columns?.map((col) => col);
 
-  console.log("board column", boardCol);
+  // console.log("board column", boardCol);
 
   return (
     <>
