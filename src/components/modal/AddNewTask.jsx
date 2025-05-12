@@ -95,6 +95,7 @@ const AddNewTask = () => {
       id: nanoid(),
       title: taskName,
       description: taskDesc,
+      colid: selectedId,
       subtask: subTask.filter((st) => st.value.trim() !== ""),
     };
 

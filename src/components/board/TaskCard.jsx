@@ -1,49 +1,26 @@
 import React from "react";
-import { useSelector } from "react-redux";
 
-const TaskCard = () => {
-  const boards = useSelector((state) => state.board.boards);
-  const currentId = useSelector((state) => state.board.currentBoardId);
-
-  console.log("boards", boards);
-  console.log("currentId", currentId);
-
-  // Flatten all tasks into one array
-  // const tasksList =
-  //   boards?.flatMap(
-  //     (board) => board.columns?.flatMap((col) => col.tasks ?? []) ?? []
-  //   ) ?? [];
-
-  const tasksList = boards?.find((val) => val.id === currentId?.id);
-  console.log("taskslist", tasksList);
-
-  const sbTask = tasksList?.map((t) => t).subtask?.map((val) => val);
-  // console.log("sbTask", sbTask);
-
+const TaskCard = ({ column }) => {
+  const tasks = column.tasks;
   return (
     <>
-      {/* {tasksList.map((task) => (
+      {tasks.map((task) => (
         <div
           key={task.id}
-          className="bg-white rounded-lg dark:bg-darkbg shadow-shadow my-5 px-3 py-6 shadow-lg hover:text-theme cursor-pointer group"
+          className="bg-white rounded-lg dark:bg-darkbg shadow-shadow mb-4 px-3 py-4 shadow-lg hover:text-theme cursor-pointer  mt-4 group"
         >
           <p className="dark:text-white font-bold tracking-wide group-hover:text-theme text-base">
             {task.title}
           </p>
+          <p className="text-gray-500 text-sm mt-1">{task.description}</p>
 
-          {task.subtask.map((sub, index) => {
-            console.log("subtask", sub);
-            return (
-              <p
-                key={index} // If subtasks don't have an id, fallback to index
-                className="text-gray-500 text-xs mt-2 font-bold tracking-wide"
-              >
-                {`${sub} of ${sub} completed task`}
-              </p>
-            );
-          })}
+          <p className="text-gray-500 text-xs mt-2 font-bold tracking-wide">
+            {`${task.subtask?.length ?? 0} of ${
+              task.subtask?.length ?? 0
+            } completed task`}
+          </p>
         </div>
-      ))} */}
+      ))}
     </>
   );
 };

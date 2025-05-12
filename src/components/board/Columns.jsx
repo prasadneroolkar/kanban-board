@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import TaskCard from "../board/TaskCard";
 import { useSelector } from "react-redux";
 
@@ -10,7 +10,7 @@ const Columns = () => {
     ?.find((board) => board.id === currentBoardId)
     ?.columns?.map((col) => col);
 
-  // console.log("board column", boardCol);
+  console.log("board column", boardCol);
 
   return (
     <>
@@ -24,8 +24,7 @@ const Columns = () => {
               {col.value}
             </span>
           </h3>
-          <TaskCard />
-          <TaskCard />
+          <TaskCard column={col} />
         </div>
       ))}
     </>
