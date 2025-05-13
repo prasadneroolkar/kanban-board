@@ -84,7 +84,12 @@ const CreateNewBoard = () => {
     const newBoard = {
       id: nanoid(), // Unique id for the board
       name: boardName.trim(), // The board name from your input
-      columns: columns, // The array of columns you've built
+      columns: columns.map((col) => ({
+        id: col.id,
+        name: col.value.trim(),
+        color: col.color,
+        tasks: [],
+      })),
     };
 
     try {

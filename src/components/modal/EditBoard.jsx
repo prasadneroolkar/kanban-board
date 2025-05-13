@@ -6,58 +6,92 @@ import ModalInputs, { Wrapper } from "../modal/ModalInputs";
 import CloseButton from ".././modal/CloseButton";
 import ButtonWrapper from "../common/ButtonWrapper";
 import { nanoid } from "nanoid";
+import { updateBoardAction } from "../board/boardSlice.js";
 import Button from "../button/Button";
 
 const EditBoard = () => {
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
-  console.log("boards", boards);
-  console.log("currentId", currentId);
+  const dispatch = useDispatch();
 
   const modalRef = useRef();
 
-  useEffect(() => {
-    console.log("boards", boards);
-    console.log("currentId", currentId);
-  }, []);
-
   const currentBoard = boards?.find((curr) => curr.id === currentId);
 
-  const [boardName, setBoardName] = useState(currentBoard?.name);
-  console.info("currentBoard", boardName);
-  const initialColumns = currentBoard?.columns?.map((col) => col);
-  console.info("initialColumns", initialColumns);
+  const [boardName, setBoardName] = useState(currentBoard?.name || "");
 
-  const [columns, setColumns] = useState(initialColumns);
+  const [columns, setColumns] = useState([]);
+
+  const initialColumnsRef = useRef([]);
 
   useEffect(() => {
     setBoardName(currentBoard?.name || "");
-    setColumns(currentBoard?.columns || []);
   }, [currentBoard]);
-  console.info("currentColumns", columns);
+
+  useEffect(() => {
+    const cols = currentBoard?.columns?.map((col) => ({ ...col })) || [];
+    initialColumnsRef.current = cols;
+    setColumns(cols);
+  }, [currentBoard]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
         console.log("Clicked outside component!");
-        setColumns(initialColumns);
+        setColumns(initialColumnsRef.current);
       }
     };
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [initialColumns]);
+  }, []);
 
-  const updateBoard = () => {};
+  const updateBoard = () => {
+    if (boardName.trim() === "") {
+      alert("Board name cannot be empty");
+      return;
+    }
+
+    if (columns.some((col) => col.value.trim() === "")) {
+      alert("Column names cannot be empty.");
+      return;
+    }
+
+    const updatedBoard = {
+      id: currentId,
+      name: boardName,
+      columns: columns.map((col) => ({
+        ...col,
+        value: col.value.trim(),
+        name: col.value.trim(),
+      })),
+    };
+    try {
+      dispatch(updateBoardAction(updatedBoard));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const handleMultiplecol = (id, newValue) => {
     setColumns((prev) =>
-      prev.map((col) => (col.id === id ? { ...col, value: newValue } : col))
+      prev.map((col) =>
+        col.id === id ? { ...col, value: newValue, name: newValue } : col
+      )
     );
   };
+
   const handleRemove = (id) => {
     setColumns(columns?.filter((col) => col.id !== id));
   };
-  const addColumn = () => {};
+  const addColumn = () => {
+    const newColumn = {
+      id: nanoid(),
+      value: "",
+      name: "", // or any other default property you use
+    };
+    setColumns((prev) => [...prev, newColumn]);
+  };
 
   return (
     <div ref={modalRef}>
@@ -100,7 +134,7 @@ const EditBoard = () => {
                 onClick={addColumn}
               />
               <Button
-                buttonName="Create New Board"
+                buttonName="Update"
                 className="w-full justify-center"
                 onClick={() => updateBoard()}
               />

@@ -27,8 +27,19 @@ const boardSlice = createSlice({
 
       column.tasks.push(task);
     },
+    updateBoardAction: (state, action) => {
+      const updatedBoard = action.payload;
+      const index = state.boards.findIndex(
+        (board) => board.id === updatedBoard.id
+      );
+
+      if (index !== -1) {
+        state.boards[index] = updatedBoard;
+      }
+    },
   },
 });
 
-export const { addBoard, setCurrentBoard, addTask } = boardSlice.actions;
+export const { addBoard, setCurrentBoard, addTask, updateBoardAction } =
+  boardSlice.actions;
 export default boardSlice.reducer;

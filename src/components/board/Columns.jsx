@@ -21,7 +21,7 @@ const Columns = () => {
               className={`rounded-full w-4 h-4 inline-block ${col.color}`}
             ></span>
             <span className="text-dark-text tracking-widest font-semibold">
-              {col.value}
+              {col.name}
             </span>
           </h3>
           <TaskCard column={col} />

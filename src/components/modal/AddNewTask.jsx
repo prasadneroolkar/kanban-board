@@ -20,17 +20,14 @@ const AddNewTask = () => {
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
 
-  const [selectedOp, setSelectop] = useState("");
+  const [selectedColId, setSelectedColId] = useState(
+    currentBoard?.columns?.[0]?.id || ""
+  );
+  console.log("SelectedCOption", selectedColId);
 
   useEffect(() => {}, []);
 
   const selectRef = useRef();
-
-  // useEffect(() => {}, []);
-
-  // const [selectedValue, setselectedValue] = useState(
-  //   currentBoard?.columns?.[0].value
-  // );
 
   const [subTask, setsubTask] = useState([
     {
@@ -45,14 +42,8 @@ const AddNewTask = () => {
     },
   ]);
 
-  useEffect(() => {
-    // console.log("subTask", subTask);
-    // console.log("selectedValue", selectedValue);
-  }, []);
-
   const handleRemove = (id) => {
-    const removeTask = subTask?.filter((task) => task.id !== id);
-    setsubTask(removeTask);
+    setsubTask((prev) => prev.filter((task) => task.id !== id));
   };
 
   const handleAddtask = () => {
@@ -87,32 +78,37 @@ const AddNewTask = () => {
     ]);
   };
   const createTask = (closeModal) => {
-    const selectedOption =
-      selectRef.current.options[selectRef.current.selectedIndex];
-    const selectedId = selectedOption.id;
+    if (!taskName.trim()) {
+      alert("Task name is required.");
+      return;
+    }
+
+    const selectedOption = selectRef.current?.value;
 
     const task = {
       id: nanoid(),
-      title: taskName,
-      description: taskDesc,
-      colid: selectedId,
-      subtask: subTask.filter((st) => st.value.trim() !== ""),
+      title: taskName.trim(),
+      description: taskDesc.trim(),
+      colid: selectedOption,
+      subtask: subTask
+        .filter((st) => st.value.trim() !== "")
+        .map((st) => ({
+          id: st.id,
+          title: st.value.trim(),
+          isCompleted: false,
+        })),
     };
 
     try {
       dispatch(
         addTask({
           boardId: currentBoard.id,
-          columnId: selectedId,
+          columnId: selectedOption,
           task: task,
         })
       );
       closeModal();
       resetModal();
-
-      (() => {
-        selectRef.current.option[0];
-      })();
     } catch (error) {
       console.log(error.message);
     }
@@ -169,14 +165,13 @@ const AddNewTask = () => {
             <select
               ref={selectRef}
               name="columns"
+              value={selectedColId}
               className="size-full rounded-md text-sm border-[0.5px] w-full border-gray-500 tracking-wide focus:outline-[#635fc7] focus:outline-1 bg-transparent px-4 py-2 ring-0 mt-3 mb-4 select-status cursor-pointer"
-              onChange={(e) =>
-                console.log("Selected column id:", e.target.value)
-              }
+              onChange={(e) => setSelectedColId(e.target.value)}
             >
               {currentBoard?.columns?.map((val) => (
-                <option value={val.id} key={val.id} id={val.id}>
-                  {val.value}
+                <option value={val.id} key={val.id}>
+                  {val.name}
                 </option>
               ))}
             </select>
