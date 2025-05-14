@@ -34,6 +34,8 @@ const EditBoard = () => {
     setColumns(cols);
   }, [currentBoard]);
 
+  console.log("columns", columns);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -83,7 +85,9 @@ const EditBoard = () => {
 
   const handleRemove = (id) => {
     setColumns(columns?.filter((col) => col.id !== id));
+    console.log("in handkeltemove");
   };
+
   const addColumn = () => {
     const newColumn = {
       id: nanoid(),
@@ -117,7 +121,7 @@ const EditBoard = () => {
                 >
                   <ModalInputs
                     name={column.name}
-                    value={column.value}
+                    value={column.name}
                     onChange={(e) =>
                       handleMultiplecol(column.id, e.target.value)
                     }
@@ -146,4 +150,4 @@ const EditBoard = () => {
   );
 };
 
-export default EditBoard;
+export default React.memo(EditBoard);

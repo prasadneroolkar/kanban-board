@@ -51,7 +51,7 @@ const CreateNewBoard = () => {
 
     setColumns((prev) => [...prev, newColumn]);
   };
-  const handleBoardName = () => {
+  const handleBoardName = (event) => {
     setBoardName(event.target.value);
   };
 
