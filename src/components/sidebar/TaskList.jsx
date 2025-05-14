@@ -3,8 +3,10 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import CreateNewBoard from ".././modal/CreateNewBoard";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentBoard } from "../board/boardSlice.js";
+import { useModal } from "../../context/ModalContext";
 
 const TaskList = () => {
+  const { openModal } = useModal();
   const boards = useSelector((state) => state.board.boards);
   const dispatch = useDispatch();
 
@@ -24,7 +26,10 @@ const TaskList = () => {
         </li>
       ))}
 
-      <li className=" flex items-center space-x-2 px-5 py-4 text-lg hover:bg-[#635fc71a] text-[#635fc7] cursor-pointer font-semibold hover:rounded-r-full">
+      <li
+        className=" flex items-center space-x-2 px-5 py-4 text-lg hover:bg-[#635fc71a] text-[#635fc7] cursor-pointer font-semibold hover:rounded-r-full"
+        onClick={() => openModal("create")}
+      >
         <FormatListBulletedIcon
           sx={{ fontSize: 20 }}
           className="dark:text-[#828fa3]"

@@ -5,14 +5,17 @@ import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./app/store.js";
 import { Provider } from "react-redux";
+import ModalContextProvider from "./context/ModalContext";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <ModalContextProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </ModalContextProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

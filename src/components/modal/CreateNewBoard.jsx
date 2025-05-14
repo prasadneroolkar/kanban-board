@@ -87,6 +87,7 @@ const CreateNewBoard = () => {
       columns: columns.map((col) => ({
         id: col.id,
         name: col.value.trim(),
+        value: col.value.trim(),
         color: col.color,
         tasks: [],
       })),

@@ -23,6 +23,16 @@ const EditBoard = () => {
   const [columns, setColumns] = useState([]);
 
   const initialColumnsRef = useRef([]);
+  const initialBoardNameRef = useRef("");
+
+  useEffect(() => {
+    return () => {
+      // Component is unmounting, reset state here
+      console.log("unmount");
+      setBoardName(initialBoardNameRef.current);
+      setColumns(initialColumnsRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     setBoardName(currentBoard?.name || "");
@@ -35,19 +45,6 @@ const EditBoard = () => {
   }, [currentBoard]);
 
   console.log("columns", columns);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        console.log("Clicked outside component!");
-        setColumns(initialColumnsRef.current);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
 
   const updateBoard = () => {
     if (boardName.trim() === "") {
@@ -101,7 +98,7 @@ const EditBoard = () => {
     <div ref={modalRef}>
       <ModalComponent textContent="Edit boards">
         {(closeModal) => (
-          <>
+          <div key={currentId} closemodal={closeModal}>
             <ModalHeading title="Edit boards" />
             <Wrapper>
               <ModalHeading subtitle="Board Name" />
@@ -143,7 +140,7 @@ const EditBoard = () => {
                 onClick={() => updateBoard()}
               />
             </ButtonWrapper>
-          </>
+          </div>
         )}
       </ModalComponent>
     </div>
