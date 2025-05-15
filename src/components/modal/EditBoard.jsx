@@ -12,39 +12,39 @@ import Button from "../button/Button";
 const EditBoard = () => {
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
-  const dispatch = useDispatch();
-
-  const modalRef = useRef();
-
   const currentBoard = boards?.find((curr) => curr.id === currentId);
 
-  const [boardName, setBoardName] = useState(currentBoard?.name || "");
+  return (
+    <ModalComponent textContent="Edit boards">
+      {({ closeModal, modalIsOpen }) => (
+        <div>
+          {modalIsOpen && (
+            <EditBoardContent
+              closeModal={closeModal}
+              currentBoard={currentBoard}
+            />
+          )}
+        </div>
+      )}
+    </ModalComponent>
+  );
+};
+
+const EditBoardContent = ({ closeModal, currentBoard }) => {
+  const dispatch = useDispatch();
+  const currentId = currentBoard?.id;
+
+  const [boardName, setBoardName] = useState("");
 
   const [columns, setColumns] = useState([]);
 
-  const initialColumnsRef = useRef([]);
-  const initialBoardNameRef = useRef("");
-
   useEffect(() => {
-    return () => {
-      // Component is unmounting, reset state here
-      console.log("unmount");
-      setBoardName(initialBoardNameRef.current);
-      setColumns(initialColumnsRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    setBoardName(currentBoard?.name || "");
-  }, [currentBoard]);
-
-  useEffect(() => {
+    const name = currentBoard?.name || "";
     const cols = currentBoard?.columns?.map((col) => ({ ...col })) || [];
-    initialColumnsRef.current = cols;
+
+    setBoardName(name);
     setColumns(cols);
   }, [currentBoard]);
-
-  console.log("columns", columns);
 
   const updateBoard = () => {
     if (boardName.trim() === "") {
@@ -68,6 +68,7 @@ const EditBoard = () => {
     };
     try {
       dispatch(updateBoardAction(updatedBoard));
+      closeModal();
     } catch (error) {
       console.log(error.message);
     }
@@ -95,55 +96,47 @@ const EditBoard = () => {
   };
 
   return (
-    <div ref={modalRef}>
-      <ModalComponent textContent="Edit boards">
-        {(closeModal) => (
-          <div key={currentId} closemodal={closeModal}>
-            <ModalHeading title="Edit boards" />
-            <Wrapper>
-              <ModalHeading subtitle="Board Name" />
-              <ModalInputs
-                value={boardName}
-                placeholder=" e.g Take coffee break"
-                onChange={(event) => setBoardName(event.target.value)}
-              />
-            </Wrapper>
-            <Wrapper>
-              <ModalHeading subtitle=" Board Columns" />
+    <>
+      <ModalHeading title="Edit boards" />
+      <Wrapper>
+        <ModalHeading subtitle="Board Name" />
+        <ModalInputs
+          value={boardName}
+          placeholder=" e.g Take coffee break"
+          onChange={(event) => setBoardName(event.target.value)}
+        />
+      </Wrapper>
+      <Wrapper>
+        <ModalHeading subtitle=" Board Columns" />
 
-              {columns?.map((column) => (
-                <div
-                  key={column.id}
-                  className="flex items-center space-x-2 justify-center mt-[12px]"
-                >
-                  <ModalInputs
-                    name={column.name}
-                    value={column.name}
-                    onChange={(e) =>
-                      handleMultiplecol(column.id, e.target.value)
-                    }
-                  />
-                  <CloseButton onClick={() => handleRemove(column.id)} />
-                </div>
-              ))}
-            </Wrapper>
-            <ButtonWrapper>
-              <Button
-                buttonName="Add New Column"
-                icon="+"
-                className="w-full justify-center"
-                onClick={addColumn}
-              />
-              <Button
-                buttonName="Update"
-                className="w-full justify-center"
-                onClick={() => updateBoard()}
-              />
-            </ButtonWrapper>
+        {columns?.map((column) => (
+          <div
+            key={column.id}
+            className="flex items-center space-x-2 justify-center mt-[12px]"
+          >
+            <ModalInputs
+              name={column.name}
+              value={column.name}
+              onChange={(e) => handleMultiplecol(column.id, e.target.value)}
+            />
+            <CloseButton onClick={() => handleRemove(column.id)} />
           </div>
-        )}
-      </ModalComponent>
-    </div>
+        ))}
+      </Wrapper>
+      <ButtonWrapper>
+        <Button
+          buttonName="Add New Column"
+          icon="+"
+          className="w-full justify-center"
+          onClick={addColumn}
+        />
+        <Button
+          buttonName="Update"
+          className="w-full justify-center"
+          onClick={() => updateBoard()}
+        />
+      </ButtonWrapper>
+    </>
   );
 };
 
