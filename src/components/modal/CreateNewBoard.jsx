@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
 import { addBoard, setCurrentBoard } from "../board/boardSlice.js";
 import useColor from "../../hooks/useColor.js";
+import { toast } from "react-toastify";
 
 const CreateNewBoard = () => {
   const { randomColor } = useColor();

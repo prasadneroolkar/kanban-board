@@ -2,6 +2,7 @@ import DualComponent from "./features/auth/DualComponent";
 import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./features/auth/PrivateRoute";
 import Layout from "./components/Layout";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           }
         />
       </Routes>
+      <ToastContainer />
     </>
   );
 }

@@ -7,6 +7,7 @@ import { nanoid } from "nanoid";
 import Button from "../button/Button";
 import { addTask } from "../board/boardSlice.js";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const AddNewTask = () => {
   const currentId = useSelector((state) => state.board.currentBoardId);
@@ -79,7 +80,7 @@ const AddNewTask = () => {
   };
   const createTask = (closeModal) => {
     if (!taskName.trim()) {
-      alert("Task name is required.");
+      toast.error("Task name is required.");
       return;
     }
 
@@ -107,6 +108,7 @@ const AddNewTask = () => {
           task: task,
         })
       );
+      toast.success("Task added successfully!");
       closeModal();
       resetModal();
     } catch (error) {
