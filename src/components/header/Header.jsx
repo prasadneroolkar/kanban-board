@@ -5,12 +5,10 @@ import Dotmenu from "../header/Dotmenu";
 import AddNewTask from ".././modal/AddNewTask";
 import EditBoard from "../../components/modal/EditBoard";
 import { useSelector, useDispatch } from "react-redux";
-import { useModal } from "../../context/ModalContext";
 
 const Header = () => {
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
-  const { openModal } = useModal();
   const currentBoard = boards?.find((curr) => curr.id === currentId);
 
   return (
@@ -29,9 +27,7 @@ const Header = () => {
         <Button buttonName={<AddNewTask />} icon="+" />
         <Dotmenu />
 
-        <div onClick={() => openModal("edit")}>
-          <EditBoard />
-        </div>
+        <EditBoard />
       </div>
     </header>
   );

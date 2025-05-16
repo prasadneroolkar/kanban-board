@@ -18,7 +18,7 @@ function App() {
           }
         />
       </Routes>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} hideProgressBar={false} />
     </>
   );
 }

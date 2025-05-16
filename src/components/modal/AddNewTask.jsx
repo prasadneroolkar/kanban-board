@@ -13,8 +13,6 @@ const AddNewTask = () => {
   const currentId = useSelector((state) => state.board.currentBoardId);
   const boards = useSelector((state) => state.board.boards);
   const dispatch = useDispatch();
-  // console.log("boards", boards);
-  // console.log("boards name", boards?.columns?.[0]?.name);
 
   const currentBoard = boards?.find((board) => board.id === currentId);
 
@@ -65,6 +63,7 @@ const AddNewTask = () => {
   const resetModal = () => {
     setTaskName("");
     setTaskDesc("");
+    setSelectedColId(currentBoard?.columns?.[0]?.id || "");
     setsubTask([
       {
         id: nanoid(),
@@ -118,7 +117,7 @@ const AddNewTask = () => {
 
   return (
     <ModalComponent textContent="Add New Task" classname="text-white">
-      {(closeModal) => (
+      {({ closeModal }) => (
         <>
           <ModalHeading title="Add New Task" />
           <Wrapper>

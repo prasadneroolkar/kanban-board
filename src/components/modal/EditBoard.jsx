@@ -9,13 +9,13 @@ import { nanoid } from "nanoid";
 import { updateBoardAction } from "../board/boardSlice.js";
 import Button from "../button/Button";
 
-const EditBoard = () => {
+const EditBoard = ({ mode = "Edit boards" }) => {
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
   const currentBoard = boards?.find((curr) => curr.id === currentId);
 
   return (
-    <ModalComponent textContent="Edit boards">
+    <ModalComponent textContent={mode}>
       {({ closeModal, modalIsOpen }) => (
         <div>
           {modalIsOpen && (

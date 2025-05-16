@@ -5,9 +5,13 @@ import Columns from "../board/Columns";
 import NewColumn from "../board/NewColumn";
 import Sidebar from "../sidebar/Sidebar";
 import { useSelector } from "react-redux";
+import EditBoard from "../modal/EditBoard";
 
 const Board = () => {
   const { user } = useAuth();
+  // const [isEditBoardOpen, setIsEditBoardOpen] = React.useState(false);
+  // const [editMode, setEditMode] = React.useState("edit");
+
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
   console.log("current board id", currentId);

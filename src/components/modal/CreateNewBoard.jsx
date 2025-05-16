@@ -94,11 +94,18 @@ const CreateNewBoard = () => {
       })),
     };
 
+    if (!boardName.trim()) {
+      toast.error("Board name cannot be empty.");
+      return;
+    }
+
     try {
       dispatch(addBoard(newBoard));
       dispatch(setCurrentBoard(newBoard.id));
+
       closeModal();
       resetModal();
+      toast.success("Saved successfully");
     } catch (error) {
       console.log(error.message);
     }
@@ -106,7 +113,7 @@ const CreateNewBoard = () => {
 
   return (
     <ModalComponent textContent="Create New Board" classname="text-theme">
-      {(closeModal) => (
+      {({ closeModal }) => (
         <>
           <ModalHeading title="Add New Board" />
 
