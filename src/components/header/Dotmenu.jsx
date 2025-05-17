@@ -3,12 +3,12 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-const options = ["Edit boards", "Delete boards"];
+import EditBoard from "../modal/EditBoard";
 
 const ITEM_HEIGHT = 48;
 
 const Dotmenu = () => {
+  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -16,6 +16,15 @@ const Dotmenu = () => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleEditClick = () => {
+    setIsEditModalOpen(true); // then open the modal
+    // handleClose(); // close the menu first
+  };
+
+  const handleDeleteBoard = () => {
+    // const /
   };
 
   return (
@@ -60,15 +69,24 @@ const Dotmenu = () => {
         }}
       >
         <div className="">
-          {options.map((option) => (
-            <MenuItem key={option} onClick={handleClose}>
-              {option}
-            </MenuItem>
-          ))}
+          <ul className=" w-40 text-sm z-50 font-medium  bg-white dark:bg-[#20212c] space-y-4 py-2 px-4 rounded-lg  h-auto pr-12">
+            <li
+              className=" cursor-pointer dark:text-gray-400 text-gray-700"
+              onClick={handleEditClick}
+            >
+              {isEditModalOpen && <EditBoard />}
+            </li>
+            <li
+              className=" cursor-pointer dark:text-gray-400 text-gray-700"
+              onClick={handleDeleteBoard}
+            >
+              Delete Board
+            </li>
+          </ul>
         </div>
       </Menu>
     </div>
   );
 };
 
-export default Dotmenu;
+export default React.memo(Dotmenu);

@@ -3,7 +3,6 @@ import Logo from "../../assets/images/logo.png";
 import Button from "../button/Button";
 import Dotmenu from "../header/Dotmenu";
 import AddNewTask from ".././modal/AddNewTask";
-import EditBoard from "../../components/modal/EditBoard";
 import { useSelector, useDispatch } from "react-redux";
 
 const Header = () => {
@@ -26,8 +25,6 @@ const Header = () => {
       <div className="flex items-center justify-between">
         <Button buttonName={<AddNewTask />} icon="+" />
         <Dotmenu />
-
-        <EditBoard />
       </div>
     </header>
   );
