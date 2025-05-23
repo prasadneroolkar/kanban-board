@@ -37,9 +37,25 @@ const boardSlice = createSlice({
         state.boards[index] = updatedBoard;
       }
     },
+    deleteBoard: (state, action) => {
+      const boardIdToDelete = action.payload;
+      state.boards = state.boards.filter(
+        (board) => board.id !== boardIdToDelete
+      );
+
+      // Clear currentBoardId if it's the one being deleted
+      if (state.currentBoardId === boardIdToDelete) {
+        state.currentBoardId = null;
+      }
+    },
   },
 });
 
-export const { addBoard, setCurrentBoard, addTask, updateBoardAction } =
-  boardSlice.actions;
+export const {
+  addBoard,
+  setCurrentBoard,
+  addTask,
+  updateBoardAction,
+  deleteBoard,
+} = boardSlice.actions;
 export default boardSlice.reducer;

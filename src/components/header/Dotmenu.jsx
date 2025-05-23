@@ -4,13 +4,19 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditBoard from "../modal/EditBoard";
+import { deleteBoard, setCurrentBoard } from "../board/boardSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const ITEM_HEIGHT = 48;
 
 const Dotmenu = () => {
-  const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
+  // const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
+
+  const currentBoardId = useSelector((state) => state.board.currentBoardId);
+  const boards = useSelector((state) => state.board.boards);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -19,12 +25,25 @@ const Dotmenu = () => {
   };
 
   const handleEditClick = () => {
-    setIsEditModalOpen(true); // then open the modal
+    // setIsEditModalOpen(true); // then open the modal
     // handleClose(); // close the menu first
   };
 
   const handleDeleteBoard = () => {
-    // const /
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this board?"
+    );
+    if (!confirmed) return;
+
+    dispatch(deleteBoard(currentBoardId));
+    handleClose();
+
+    const remainingBoards = boards.filter(
+      (board) => board.id !== currentBoardId
+    );
+    dispatch(
+      setCurrentBoard(remainingBoards.length ? remainingBoards[0].id : null)
+    );
   };
 
   return (
@@ -74,7 +93,7 @@ const Dotmenu = () => {
               className=" cursor-pointer dark:text-gray-400 text-gray-700"
               onClick={handleEditClick}
             >
-              {isEditModalOpen && <EditBoard />}
+              <EditBoard />
             </li>
             <li
               className=" cursor-pointer dark:text-gray-400 text-gray-700"
