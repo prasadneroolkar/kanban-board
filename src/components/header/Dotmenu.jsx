@@ -93,7 +93,7 @@ const Dotmenu = () => {
               className=" cursor-pointer dark:text-gray-400 text-gray-700"
               onClick={handleEditClick}
             >
-              <EditBoard />
+              {/* <EditBoard /> */}
             </li>
             <li
               className=" cursor-pointer dark:text-gray-400 text-gray-700"

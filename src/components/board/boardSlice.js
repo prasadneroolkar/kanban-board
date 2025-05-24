@@ -48,6 +48,27 @@ const boardSlice = createSlice({
         state.currentBoardId = null;
       }
     },
+    moveTask: (state, action) => {
+      const { taskId, sourceColId, targetColId } = action.payload;
+
+      const board = state.boards.find(
+        (board) => board.id === state.currentBoardId
+      );
+      if (!board) return;
+
+      const sourceCol = board.columns.find((col) => col.id === sourceColId);
+      const targetCol = board.columns.find((col) => col.id === targetColId);
+      if (!sourceCol || !targetCol) return;
+
+      const taskToMove = sourceCol.tasks.find((task) => task.id === taskId);
+      if (!taskToMove) return;
+
+      // Remove the task from source column
+      sourceCol.tasks = sourceCol.tasks.filter((task) => task.id !== taskId);
+
+      // Add it to the target column
+      targetCol.tasks.push(taskToMove);
+    },
   },
 });
 
@@ -57,5 +78,6 @@ export const {
   addTask,
   updateBoardAction,
   deleteBoard,
+  moveTask,
 } = boardSlice.actions;
 export default boardSlice.reducer;

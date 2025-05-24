@@ -8,8 +8,10 @@ import ButtonWrapper from "../common/ButtonWrapper";
 import { nanoid } from "nanoid";
 import { updateBoardAction } from "../board/boardSlice.js";
 import Button from "../button/Button";
+import useColor from "../../hooks/useColor.js";
 
 const EditBoard = ({ mode = "Edit boards" }) => {
+  const { randomColor } = useColor();
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
   const currentBoard = boards?.find((curr) => curr.id === currentId);
@@ -31,6 +33,8 @@ const EditBoard = ({ mode = "Edit boards" }) => {
 };
 
 const EditBoardContent = ({ closeModal, currentBoard }) => {
+  const { randomColor } = useColor();
+
   const dispatch = useDispatch();
   const currentId = currentBoard?.id;
 
@@ -64,6 +68,7 @@ const EditBoardContent = ({ closeModal, currentBoard }) => {
         ...col,
         value: col.value.trim(),
         name: col.value.trim(),
+        tasks: col.tasks ?? [],
       })),
     };
     try {
@@ -91,6 +96,8 @@ const EditBoardContent = ({ closeModal, currentBoard }) => {
       id: nanoid(),
       value: "",
       name: "", // or any other default property you use
+      tasks: [],
+      color: randomColor(),
     };
     setColumns((prev) => [...prev, newColumn]);
   };

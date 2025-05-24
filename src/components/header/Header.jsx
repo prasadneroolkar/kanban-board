@@ -4,6 +4,7 @@ import Button from "../button/Button";
 import Dotmenu from "../header/Dotmenu";
 import AddNewTask from ".././modal/AddNewTask";
 import { useSelector, useDispatch } from "react-redux";
+import EditBoard from "../modal/EditBoard";
 
 const Header = () => {
   const boards = useSelector((state) => state.board.boards);
@@ -25,6 +26,7 @@ const Header = () => {
       <div className="flex items-center justify-between">
         <Button buttonName={<AddNewTask />} icon="+" />
         <Dotmenu />
+        <EditBoard />
       </div>
     </header>
   );
