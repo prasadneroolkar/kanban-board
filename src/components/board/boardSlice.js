@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import boardData from "../board/boards.json";
 
 const initialState = {
-  boards: [],
-  currentBoardId: null,
+  boards: boardData,
+  currentBoardId: boardData.length > 0 ? boardData[0].id : null,
 };
 
 const boardSlice = createSlice({
@@ -45,7 +46,8 @@ const boardSlice = createSlice({
 
       // Clear currentBoardId if it's the one being deleted
       if (state.currentBoardId === boardIdToDelete) {
-        state.currentBoardId = null;
+        state.currentBoardId =
+          state.boards.length > 0 ? state.boards[0].id : null;
       }
     },
     moveTask: (state, action) => {

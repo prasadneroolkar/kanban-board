@@ -44,7 +44,8 @@ const EditBoardContent = ({ closeModal, currentBoard }) => {
 
   useEffect(() => {
     const name = currentBoard?.name || "";
-    const cols = currentBoard?.columns?.map((col) => ({ ...col })) || [];
+    const cols =
+      currentBoard?.columns?.map((col) => ({ ...col, value: col.name })) || [];
 
     setBoardName(name);
     setColumns(cols);
@@ -56,7 +57,7 @@ const EditBoardContent = ({ closeModal, currentBoard }) => {
       return;
     }
 
-    if (columns.some((col) => col.value.trim() === "")) {
+    if (columns.some((col) => !col.value || col.value.trim() === "")) {
       alert("Column names cannot be empty.");
       return;
     }

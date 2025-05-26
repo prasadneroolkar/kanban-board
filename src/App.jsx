@@ -8,9 +8,10 @@ function App() {
   return (
     <>
       <Routes>
-        <Route index element={<DualComponent />} />
+        {/* <Route index element={<DualComponent />} /> */}
         <Route
-          path="/dashboard"
+          index
+          // path="/dashboard"
           element={
             <PrivateRoute>
               <Layout />

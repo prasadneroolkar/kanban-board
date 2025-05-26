@@ -1,0 +1,99 @@
+[
+  {
+    "id": "board-1",
+    "name": "Project Alpha",
+    "columns": [
+      {
+        "color": "bg-pink-500",
+        "id": "todo-1",
+        "name": "To Do",
+        "tasks": [
+          {
+            "id": "task-1",
+            "title": "Design wireframes",
+            "description": "Create wireframes for the landing page",
+            "status": "To Do"
+          },
+          {
+            "id": "task-2",
+            "title": "Research competitors",
+            "description": "Analyze key features from top 5 competitors",
+            "status": "To Do"
+          }
+        ]
+      },
+      {
+        "color": "bg-sky-500",
+        "id": "inprogress-1",
+        "name": "In Progress",
+        "tasks": [
+          {
+            "id": "task-3",
+            "title": "API integration",
+            "description": "Connect frontend to backend APIs",
+            "status": "In Progress"
+          }
+        ]
+      },
+      {
+        "color": "bg-teal-600",
+        "id": "done-1",
+        "name": "Done",
+        "tasks": [
+          {
+            "id": "task-4",
+            "title": "Set up project repo",
+            "description": "Initialize GitHub repo and add collaborators",
+            "status": "Done"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "board-2",
+    "name": "Marketing Campaign",
+    "columns": [
+      {
+        "color": "bg-violet-500",
+
+        "id": "todo-2",
+        "name": "Ideas",
+        "tasks": [
+          {
+            "id": "task-5",
+            "title": "Social media teaser",
+            "description": "Design teaser graphics for Instagram",
+            "status": "Ideas"
+          }
+        ]
+      },
+      {
+        "color": "bg-rose-300",
+        "id": "inprogress-2",
+        "name": "Content Creation",
+        "tasks": [
+          {
+            "id": "task-6",
+            "title": "Blog post draft",
+            "description": "Write draft for launch announcement",
+            "status": "Content Creation"
+          }
+        ]
+      },
+      {
+        "color": "bg-fuchsia-600",
+        "id": "done-2",
+        "name": "Published",
+        "tasks": [
+          {
+            "id": "task-7",
+            "title": "Email Newsletter",
+            "description": "Send announcement to mailing list",
+            "status": "Published"
+          }
+        ]
+      }
+    ]
+  }
+]
