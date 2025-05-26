@@ -2,6 +2,8 @@ import React from "react";
 import EditBoard from "../modal/EditBoard";
 
 const NewColumn = () => {
+  console.log("NewColumn component");
+
   const [show, setShow] = React.useState(null);
 
   return (

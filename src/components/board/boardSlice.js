@@ -71,6 +71,20 @@ const boardSlice = createSlice({
       // Add it to the target column
       targetCol.tasks.push(taskToMove);
     },
+    updateTask: (state, action) => {
+      const { taskId, columnId, title, description } = action.payload;
+      const board = state.boards.find((b) => b.id === state.currentBoardId);
+      if (!board) return;
+
+      const column = board.columns.find((col) => col.id === columnId);
+      if (!column) return;
+
+      const task = column.tasks.find((t) => t.id === taskId);
+      if (!task) return;
+
+      task.title = title;
+      task.description = description;
+    },
   },
 });
 
@@ -81,5 +95,6 @@ export const {
   updateBoardAction,
   deleteBoard,
   moveTask,
+  updateTask,
 } = boardSlice.actions;
 export default boardSlice.reducer;

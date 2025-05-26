@@ -16,10 +16,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        console.log("current user", currentUser);
+        // console.log("current user", currentUser);
         const userRef = doc(db, "Users", currentUser.uid);
         const userSnap = await getDoc(userRef);
-        console.log("usersnap", userSnap.data());
+        // console.log("usersnap", userSnap.data());
 
         if (userSnap.exists()) {
           setUser({
