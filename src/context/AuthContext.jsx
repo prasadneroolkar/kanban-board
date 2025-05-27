@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             ...userSnap.data(),
           });
         } else {
-          console.log("else part");
+          // console.log("else part");
           setUser({
             uid: currentUser.uid,
             email: currentUser.email,

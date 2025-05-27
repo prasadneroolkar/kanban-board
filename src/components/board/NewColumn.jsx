@@ -24,4 +24,4 @@ const NewColumn = () => {
   );
 };
 
-export default NewColumn;
+export default React.memo(NewColumn);

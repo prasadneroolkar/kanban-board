@@ -3,7 +3,7 @@ import TaskCard from "../board/TaskCard";
 import { useSelector } from "react-redux";
 import { useDroppable } from "@dnd-kit/core";
 
-const Column = ({ col }) => {
+const Column = React.memo(({ col }) => {
   const { setNodeRef } = useDroppable({
     id: col.id,
     data: { columnId: col.id },
@@ -22,16 +22,18 @@ const Column = ({ col }) => {
       <TaskCard column={col} />
     </div>
   );
-};
+});
 
 const Columns = () => {
+  console.log("Columns part");
+
   const boards = useSelector((state) => state.board.boards);
   const currentBoardId = useSelector((state) => state.board.currentBoardId);
 
   const boardCol =
     boards.find((board) => board.id === currentBoardId)?.columns ?? [];
 
-  console.log("board column", boardCol);
+  // console.log("board column", boardCol);
 
   return (
     <>
@@ -42,4 +44,4 @@ const Columns = () => {
   );
 };
 
-export default Columns;
+export default React.memo(Columns);

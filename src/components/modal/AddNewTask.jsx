@@ -22,7 +22,7 @@ const AddNewTask = () => {
   const [selectedColId, setSelectedColId] = useState(
     currentBoard?.columns?.[0]?.id || ""
   );
-  console.log("SelectedCOption", selectedColId);
+  // console.log("SelectedCOption", selectedColId);
 
   useEffect(() => {}, []);
 

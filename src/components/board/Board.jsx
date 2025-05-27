@@ -12,24 +12,32 @@ import { moveTask } from "../board/boardSlice.js";
 import { DndContext } from "@dnd-kit/core";
 
 const Board = () => {
+  console.log("Board part");
+
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
-  console.log("current board id", currentId);
+  // console.log("current board id", currentId);
 
   const selectedBoard = boards.find((board) => board.id === currentId);
-  console.log("selectedBoard", selectedBoard);
+  // console.log("selectedBoard", selectedBoard);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
-    if (!over || active.id === over.id) return;
+    if (!over) return;
+
+    const sourceColId = active.data.current.columnId;
+    const targetColId = over.data.current.columnId;
+
+    // Prevent dispatch if dropped in the same column
+    if (sourceColId === targetColId) return;
 
     dispatch(
       moveTask({
         taskId: active.id,
-        sourceColId: active.data.current.columnId,
-        targetColId: over.data.current.columnId,
+        sourceColId,
+        targetColId,
       })
     );
   };
@@ -49,4 +57,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default React.memo(Board);

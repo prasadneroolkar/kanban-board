@@ -1,7 +1,7 @@
 import React from "react";
 import { useDraggable } from "@dnd-kit/core";
 
-const Task = ({ task, columnId }) => {
+const Task = React.memo(({ task, columnId }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: task.id,
     data: { columnId }, // Track which column the task comes from
@@ -36,11 +36,12 @@ const Task = ({ task, columnId }) => {
       </p> */}
     </div>
   );
-};
+});
 
 const TaskCard = ({ column }) => {
   const tasks = column?.tasks ?? [];
-  console.log("tasks", tasks);
+  console.log("TaskCard part");
+
   return (
     <>
       {tasks.map((task) => (
@@ -50,4 +51,4 @@ const TaskCard = ({ column }) => {
   );
 };
 
-export default TaskCard;
+export default React.memo(TaskCard);
