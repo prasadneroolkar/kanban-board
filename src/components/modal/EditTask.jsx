@@ -1,61 +1,80 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
 import { useDispatch } from "react-redux";
-import { updateTask } from "../board/boardSlice.js";
-
-Modal.setAppElement("#root"); // important for accessibility
+import { updateTask } from "../board/boardSlice";
 
 const EditTask = ({ isOpen, onClose, task, columnId }) => {
   const dispatch = useDispatch();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
+
+  useEffect(() => {
+    console.log("isOpen", isOpen);
+    console.log("onClose", onClose);
+    console.log("task", task);
+    console.log("columnId", columnId);
+  }, [isOpen, onClose, task, columnId]);
 
   useEffect(() => {
     if (task) {
-      setTitle(task.title || "");
-      setDescription(task.description || "");
+      setTitle(task.title);
+      setDescription(task.description);
     }
   }, [task]);
 
-  const handleSave = () => {
-    dispatch(updateTask({ taskId: task.id, columnId, title, description }));
-    onClose();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(
+      updateTask({
+        taskId: task.id,
+        columnId,
+        updatedTask: {
+          ...task,
+          title,
+          description,
+        },
+      })
+    );
+
+    onClose(); // close modal
   };
 
+  // if (!isOpen) return null;
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      contentLabel="Edit Task"
-      className="w-[90%] max-w-md mx-auto mt-24 bg-white dark:bg-darkbg p-6 rounded shadow-lg outline-none"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-start"
-    >
-      <h2 className="text-xl font-semibold mb-4">Edit Task</h2>
-      <input
-        className="w-full p-2 mb-3 border rounded"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Task Title"
-      />
-      <textarea
-        className="w-full p-2 mb-4 border rounded"
-        rows={4}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Task Description"
-      />
-      <div className="flex justify-end gap-3">
-        <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">
-          Cancel
-        </button>
-        <button
-          onClick={handleSave}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
-          Save
-        </button>
+    <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-darkbg rounded-xl p-6 w-96">
+        <h2 className="text-xl font-bold mb-4 dark:text-white">Edit Task</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            type="text"
+            className="p-2 rounded border"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Task title"
+            required
+          />
+          <textarea
+            className="p-2 rounded border"
+            rows="4"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Task description"
+          />
+          <div className="flex justify-end gap-3">
+            <button type="button" onClick={onClose} className="text-gray-500">
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Save
+            </button>
+          </div>
+        </form>
       </div>
-    </Modal>
+    </div>
   );
 };
 
