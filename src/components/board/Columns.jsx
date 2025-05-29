@@ -1,17 +1,12 @@
 import React from "react";
 import TaskCard from "../board/TaskCard";
 import { useSelector } from "react-redux";
-import { useDroppable } from "@dnd-kit/core";
+import { Droppable } from "@hello-pangea/dnd";
 
-const Column = React.memo(({ col }) => {
-  const { setNodeRef } = useDroppable({
-    id: col.id,
-    data: { columnId: col.id },
-  });
-
+const Column = ({ col }) => {
   return (
-    <div ref={setNodeRef} className="min-w-[280px]">
-      <h3 className="space-x-2 flex items-center">
+    <div className="min-w-[280px] mr-6">
+      <h3 className="flex items-center mb-4 space-x-2">
         <span
           className={`rounded-full w-4 h-4 inline-block ${col.color}`}
         ></span>
@@ -22,18 +17,13 @@ const Column = React.memo(({ col }) => {
       <TaskCard column={col} />
     </div>
   );
-});
+};
 
 const Columns = () => {
-  console.log("Columns part");
-
   const boards = useSelector((state) => state.board.boards);
   const currentBoardId = useSelector((state) => state.board.currentBoardId);
-
   const boardCol =
     boards.find((board) => board.id === currentBoardId)?.columns ?? [];
-
-  // console.log("board column", boardCol);
 
   return (
     <>
@@ -44,4 +34,4 @@ const Columns = () => {
   );
 };
 
-export default React.memo(Columns);
+export default Columns;

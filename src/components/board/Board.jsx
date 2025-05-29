@@ -1,60 +1,62 @@
 import React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../context/AuthContext";
-import LogoutButton from "../button/LogoutButton";
+import Sidebar from "../sidebar/Sidebar";
 import Columns from "../board/Columns";
 import NewColumn from "../board/NewColumn";
-import Sidebar from "../sidebar/Sidebar";
-import EditBoard from "../modal/EditBoard";
-import { moveTask } from "../board/boardSlice.js";
+import { moveTask, setJustDragged } from "../board/boardSlice.js";
 
-import { DndContext } from "@dnd-kit/core";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 const Board = () => {
-  console.log("Board part");
-
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.board.boards);
   const currentId = useSelector((state) => state.board.currentBoardId);
-  // console.log("current board id", currentId);
-
   const selectedBoard = boards.find((board) => board.id === currentId);
-  // console.log("selectedBoard", selectedBoard);
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
+  const onDragStart = () => {
+    dispatch(setJustDragged(true));
+  };
 
-    if (!over) return;
+  const onDragEnd = (result) => {
+    console.log("Drag result", result);
 
-    const sourceColId = active.data.current.columnId;
-    const targetColId = over.data.current.columnId;
+    dispatch(setJustDragged(true));
 
-    // Prevent dispatch if dropped in the same column
-    if (sourceColId === targetColId) return;
+    const { source, destination, draggableId } = result;
 
-    dispatch(
-      moveTask({
-        taskId: active.id,
-        sourceColId,
-        targetColId,
-      })
-    );
+    if (!destination) return;
+    if (
+      source.droppableId === destination.droppableId &&
+      source.index === destination.index
+    )
+      return;
+    try {
+      dispatch(
+        moveTask({
+          taskId: draggableId,
+          sourceColId: source.droppableId,
+          targetColId: destination.droppableId,
+          sourceIndex: source.index,
+          destinationIndex: destination.index,
+        })
+      );
+      console.log("Drag result", result);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
-    <>
-      <div className="w-dvw bg-[#f4f7fd] flex dark:bg-dark-layout">
-        <Sidebar />
-        <DndContext onDragEnd={handleDragEnd}>
-          <div className="flex gap-11 py-4 px-10 ml-[261px] overflow-x-scroll scrollbar-hide overflow-y-scroll">
-            <Columns />
-            <NewColumn />
-          </div>
-        </DndContext>
-      </div>
-    </>
+    <div className="w-dvw bg-[#f4f7fd] flex dark:bg-dark-layout">
+      <Sidebar />
+      <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
+        <div className="flex gap-11 py-4 px-10 ml-[261px] overflow-x-scroll scrollbar-hide overflow-y-scroll">
+          <Columns board={selectedBoard} />
+          <NewColumn />
+        </div>
+      </DragDropContext>
+    </div>
   );
 };
 
-export default React.memo(Board);
+export default Board;

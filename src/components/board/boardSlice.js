@@ -4,6 +4,7 @@ import boardData from "../board/boards.json";
 const initialState = {
   boards: boardData,
   currentBoardId: boardData.length > 0 ? boardData[0].id : null,
+  justDragged: false, // ✅ Ensure it's defined
 };
 
 const boardSlice = createSlice({
@@ -51,26 +52,28 @@ const boardSlice = createSlice({
       }
     },
     moveTask: (state, action) => {
-      const { taskId, sourceColId, targetColId } = action.payload;
+      const {
+        taskId,
+        sourceColId,
+        targetColId,
+        sourceIndex,
+        destinationIndex,
+      } = action.payload;
 
-      const board = state.boards.find(
-        (board) => board.id === state.currentBoardId
-      );
+      const board = state.boards.find((b) => b.id === state.currentBoardId);
       if (!board) return;
 
       const sourceCol = board.columns.find((col) => col.id === sourceColId);
       const targetCol = board.columns.find((col) => col.id === targetColId);
       if (!sourceCol || !targetCol) return;
 
-      const taskToMove = sourceCol.tasks.find((task) => task.id === taskId);
-      if (!taskToMove) return;
+      const [movedTask] = sourceCol.tasks.splice(sourceIndex, 1);
 
-      // Remove the task from source column
-      sourceCol.tasks = sourceCol.tasks.filter((task) => task.id !== taskId);
+      if (!movedTask) return;
 
-      // Add it to the target column
-      targetCol.tasks.push(taskToMove);
+      targetCol.tasks.splice(destinationIndex, 0, movedTask);
     },
+
     updateTask: (state, action) => {
       const { taskId, columnId, title, description } = action.payload;
       const board = state.boards.find((b) => b.id === state.currentBoardId);
@@ -85,6 +88,9 @@ const boardSlice = createSlice({
       task.title = title;
       task.description = description;
     },
+    setJustDragged: (state, action) => {
+      state.justDragged = action.payload;
+    },
   },
 });
 
@@ -96,5 +102,6 @@ export const {
   deleteBoard,
   moveTask,
   updateTask,
+  setJustDragged,
 } = boardSlice.actions;
 export default boardSlice.reducer;
